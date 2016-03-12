@@ -1,5 +1,5 @@
 import * as types from '../constants/ActionTypes';
 
-export function restartGame() {
-  return { type: types.RESTART_GAME };
+export function clickBox(index) {
+  return { type: types.CLICK_BOX, index };
 }

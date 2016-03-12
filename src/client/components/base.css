@@ -206,6 +206,12 @@ html, body {
   line-height: 1;
 }
 
+html,
+body,
+body > div {
+  height: 100%;
+}
+
 
 ul {
   margin: 0;

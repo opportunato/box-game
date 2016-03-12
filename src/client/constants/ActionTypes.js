@@ -1,1 +1,1 @@
-export const RESTART_GAME = 'RESTART_GAME';
+export const CLICK_BOX = 'CLICK_BOX';

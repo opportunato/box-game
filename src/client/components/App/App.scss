@@ -1,13 +1,63 @@
 @import "../base.css";
 
+$base-size: 50px;
+
 .root {
   position: relative;
 
-  overflow: hidden;
+  height: 3 * $base-size;
+  width: 3 * $base-size;
 
-  max-width: 650px;
+  left: 50%;
+  top: 50%;
 
-  text-align: center;
+  margin-left: -3/2 * $base-size;;
+  margin-top: -3/2 * $base-size;;
+}
 
-  background-color: #f2f2f2;
+.top-left,
+.top-right,
+.bottom-right,
+.bottom-left,
+.center {
+  position: absolute;
+
+  width: $base-size;
+  height: $base-size;
+
+  background-color: blue;
+
+  cursor: pointer;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+
+  margin-left: -$base-size/2;
+  margin-top: -$base-size/2;
+}
+
+.clicked {
+  background-color: red;
 }
