@@ -1,0 +1,34 @@
+{
+  "parser": "babel-eslint",
+  "extends": "eslint-config-airbnb",
+
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+
+  "plugins": [
+    "babel",
+    "react"
+  ],
+
+  "ecmaFeatures": {
+    "jsx": true
+  },
+
+  "globals": {
+    "__CLIENT__": true,
+    "__SERVER__": true
+  },
+
+  rules: {
+    "comma-dangle": 0,
+    "jsx-quotes": 1,
+
+    "react/jsx-uses-vars": 1,
+    "react/jsx-no-undef": 1,
+    "react/react-in-jsx-scope": 1,
+    "react/jsx-uses-react": 1
+  }
+}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="%%assetsPath%%{{ getRevved('/app.css') }}"></link>
+{% endblock %}
+
+{% block afterbody %}
+  <div id="app">%%body%%</div>
+  <script src="%%assetsPath%%{{ getRevved('/vendor.js') }}"></script>
+  <script src="%%assetsPath%%{{ getRevved('/app.js') }}"></script>
+{% endblock %}
