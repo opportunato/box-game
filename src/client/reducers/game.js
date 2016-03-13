@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import * as phases from '../constants/Phases';
+import * as objects from '../constants/Objects';
 
 import { range } from 'lodash';
 
@@ -7,7 +8,7 @@ const MAX_SMASH_CLICKS = 4;
 
 const phasesOrder = [
   phases.SMASH,
-  phases.COLOR,
+  phases.BOX,
 ];
 
 const positions = [
@@ -22,7 +23,9 @@ const initialState = {
 
   smashClicks: 0,
 
-  boxes: range(0, 4).map(number => ({
+  boxCenterClicked: false,
+
+  corners: range(0, 4).map(number => ({
     clicked: false,
     position: positions[number]
   }))
@@ -31,35 +34,58 @@ const initialState = {
 const smashPhase = (state, action) => {
   switch (action.type) {
 
-    case types.SMASH_CRYSTAL:
-      if (state.smashClicks >= MAX_SMASH_CLICKS - 1) {
-        return {
-          ...state,
-          phase: phases.COLOR,
-        };
+    case types.CLICK:
+      const { object } = action.options;
+
+      switch (object) {
+        case objects.ROCK:
+          if (state.smashClicks >= MAX_SMASH_CLICKS - 1) {
+            return {
+              ...state,
+              phase: phases.BOX,
+            };
+          }
+          return {
+            ...state,
+            smashClicks: state.smashClicks += 1,
+          };
+        default:
+          return state;
       }
-      return {
-        ...state,
-        smashClicks: state.smashClicks += 1,
-      };
+      break;
 
     default:
       return state;
   }
 };
 
-const colorPhase = (state, action) => {
+const boxPhase = (state, action) => {
   switch (action.type) {
-    case types.COLOR_CLICK_BOX:
-      if (action.index === 0 || state.boxes[action.index - 1].clicked) {
-        return {
-          ...state,
-          boxes: state.boxes.map((box, index) =>
-            (index === action.index) ? { ...box, clicked: true } : box
-          )
-        };
+    case types.CLICK:
+      const { object, index } = action.options;
+
+      switch (object) {
+        case objects.BOX_CORNER:
+          if (state.boxCenterClicked && index === 0 || state.corners[index - 1].clicked) {
+            return {
+              ...state,
+              corners: state.corners.map((box, _index) =>
+                (_index === index) ? { ...box, clicked: true } : box
+              )
+            };
+          }
+          return state;
+
+        case objects.BOX_CENTER:
+          return {
+            ...state,
+            boxCenterClicked: true,
+          };
+
+        default:
+          return state;
       }
-      return state;
+      break;
 
     default:
       return state;
@@ -68,7 +94,7 @@ const colorPhase = (state, action) => {
 
 const phaseFunctions = {
   [phases.SMASH]: smashPhase,
-  [phases.COLOR]: colorPhase,
+  [phases.BOX]: boxPhase,
 };
 
 export default function game(state = initialState, action) {

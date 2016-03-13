@@ -1,2 +1,2 @@
 export const SMASH = 'SMASH';
-export const COLOR = 'COLOR';
+export const BOX = 'BOX';

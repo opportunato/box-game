@@ -1,6 +1,19 @@
 @import "../base.css";
 
-$base-size: 50px;
+$rock-height: 583px;
+$rock-width: 640px;
+$box-size: 433px;
+$button-size: 151px;
+$corner-size: 56px;
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+
+  cursor: pointer;
+}
 
 .root {
   height: 100%;
@@ -12,81 +25,101 @@ $base-size: 50px;
   background-size: cover;
 }
 
-.game {
-  position: relative;
-
-  height: 3 * $base-size;
-  width: 3 * $base-size;
+.rock,
+.box {
+  position: absolute;
 
   left: 50%;
   top: 50%;
-
-  margin-left: -3/2 * $base-size;
-  margin-top: -3/2 * $base-size;
 }
 
-.crystal {
-  height: 100%;
-  width: 100%;
+.rock {
+  height: $rock-height;
+  width: $rock-width;
 
-  background-image: url("./crystal/rock-state1.png");
-  background-size: 3 * $base-size;
+  margin-left: - $rock-width/2;
+  margin-top: - $rock-height/2;
+
+  background-image: url("./rock/rock-state1.png");
   background-repeat: no-repeat;
 
   &.clicked-1 {
-    background-image: url("./crystal/rock-state2.png");
+    background-image: url("./rock/rock-state2.png");
   }
   &.clicked-2 {
-    background-image: url("./crystal/rock-state3.png");
+    background-image: url("./rock/rock-state3.png");
   }
   &.clicked-3 {
-    background-image: url("./crystal/rock-state4.png");
+    background-image: url("./rock/rock-state4.png");
   }
 }
 
-.top-left,
-.top-right,
-.bottom-right,
-.bottom-left,
+.box {
+  height: $box-size;
+  width: $box-size;
+
+  margin-left: - $box-size/2;
+  margin-top: - $box-size/2;
+
+  background-image: url("./box/base.png");
+  background-repeat: no-repeat;
+}
+
 .center {
   position: absolute;
 
-  width: $base-size;
-  height: $base-size;
+  height: $button-size;
+  width: $button-size;
 
-  background-color: blue;
-
-  cursor: pointer;
-}
-
-.top-left {
-  top: 0;
-  left: 0;
-}
-
-.top-right {
-  top: 0;
-  right: 0;
-}
-
-.bottom-right {
-  bottom: 0;
-  right: 0;
-}
-
-.bottom-left {
-  bottom: 0;
-  left: 0;
-}
-
-.center {
   top: 50%;
   left: 50%;
 
-  margin-left: -$base-size/2;
-  margin-top: -$base-size/2;
+  margin-left: -$button-size/2;
+  margin-top: -$button-size/2;
+  outline: none;
+
+  &:active {
+    background-image: url("./box/button-pressed.png");
+  }
 }
 
-.clicked {
-  background-color: red;
+.corner {
+  position: absolute;
+
+  height: $corner-size;
+  width: $corner-size;
+
+  border-radius: 100%;
+
+  outline: none;
+
+  background-position: center;
+
+  &.top-right {
+    right: 36px;
+    top: 36px;
+  }
+
+  &.top-left {
+    left: 36px;
+    top: 36px;
+  }
+
+  &.bottom-right {
+    right: 36px;
+    bottom: 36px;
+  }
+
+  &.bottom-left {
+    left: 36px;
+    bottom: 36px;
+  }
+
+  &.clickable {
+    background-image: url("./box/corner-spot-dormant.png");
+  }
+
+  &.clicked {
+    background-image: url("./box/corner-spot-active.png");
+  }
 }
