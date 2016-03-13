@@ -1,7 +1,6 @@
 @import "../base.css";
 
-$rock-height: 583px;
-$rock-width: 640px;
+$rock-size: 401px;
 $box-size: 433px;
 $button-size: 151px;
 $corner-size: 215px;
@@ -44,23 +43,24 @@ button {
 }
 
 .rock {
-  height: $rock-height;
-  width: $rock-width;
+  height: $rock-size;
+  width: $rock-size;
 
-  margin-left: - $rock-width/2;
-  margin-top: - $rock-height/2;
+  margin-left: - $rock-size/2;
+  margin-top: - $rock-size/2;
 
-  background-image: url("./rock/rock-state1.png");
+  background-image: url("./rock/sprite.png");
   background-repeat: no-repeat;
+  background-size: 4 * $rock-size;
 
   &.clicked-1 {
-    background-image: url("./rock/rock-state2.png");
+    background-position-x: -$rock-size;
   }
   &.clicked-2 {
-    background-image: url("./rock/rock-state3.png");
+    background-position-x: -2 * $rock-size;
   }
   &.clicked-3 {
-    background-image: url("./rock/rock-state4.png");
+    background-position-x: -3 * $rock-size;
   }
 }
 

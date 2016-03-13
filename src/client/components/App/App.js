@@ -5,8 +5,11 @@ import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
 import { click, mouseMove } from '../../actions';
+import { Motion, spring } from 'react-motion';
 
 import s from './App.scss';
+
+import Rock from './Rock';
 
 require('../base.css');
 
@@ -27,7 +30,6 @@ class App extends Component {
     plantClicked: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
-    smashClicks: PropTypes.number.isRequired,
     inventory: PropTypes.object.isRequired,
     glowCoords: PropTypes.object.isRequired,
     lenseCoords: PropTypes.object.isRequired,
@@ -77,7 +79,6 @@ class App extends Component {
       hatches,
       inventory,
       corners,
-      smashClicks,
       boxCenterClicked,
       plantClicked,
       glowCoords,
@@ -93,18 +94,7 @@ class App extends Component {
         className={ s.root }
         onMouseMove={ this.lenseMove.bind(this) }
       >
-        {
-          phase === phases.SMASH &&
-          <div
-            className={
-              classNames({
-                [s.rock]: true,
-                [s[`clicked-${smashClicks}`]]: true,
-              })
-            }
-            onClick = { this.click.bind(this, { object: objects.ROCK }) }
-          />
-        }
+        { phase === phases.SMASH && <Rock /> }
         {
           [phases.BOX, phases.SOUND].indexOf(phase) > -1 &&
           <div
@@ -301,7 +291,6 @@ export default connect(
     seeds: state.seeds,
     hatches: state.hatches,
     phase: state.phase,
-    smashClicks: state.smashClicks,
     glowCoords: state.glowCoords,
     glowOpacity: state.glowOpacity,
     gliphIndex: state.gliphIndex,

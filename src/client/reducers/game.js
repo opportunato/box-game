@@ -68,13 +68,8 @@ const gliphCoords = [
   }
 ];
 
-const earthCoords = {
-  x: 100,
-  y: 100,
-};
-
 const initialState = {
-  phase: phases.LENSE,
+  phase: phases.SMASH,
 
   smashClicks: 0,
 
@@ -92,7 +87,10 @@ const initialState = {
   plantClicked: false,
   jinnSize: 1,
 
-  dialog: null,
+  dialog: {
+    ...dialogs[0],
+    index: 0
+  },
 
   lenseCoords: {
     x: null,
