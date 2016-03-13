@@ -6,20 +6,22 @@ import { range } from 'lodash';
 
 const MAX_SMASH_CLICKS = 4;
 
-const phasesOrder = [
-  phases.SMASH,
-  phases.BOX,
-];
-
-const positions = [
+const cornerPositions = [
   'top-left',
   'bottom-right',
   'bottom-left',
   'top-right',
 ];
 
+const sidePositions = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+];
+
 const initialState = {
-  phase: phasesOrder[0],
+  phase: phases.SMASH,
 
   smashClicks: 0,
 
@@ -27,8 +29,13 @@ const initialState = {
 
   corners: range(0, 4).map(number => ({
     clicked: false,
-    position: positions[number]
-  }))
+    position: cornerPositions[number]
+  })),
+
+  seeds: range(0, 4).map(number => ({
+    clicked: false,
+    position: sidePositions[number],
+  })),
 };
 
 const smashPhase = (state, action) => {
@@ -59,6 +66,14 @@ const smashPhase = (state, action) => {
   }
 };
 
+const checkForCatch = (state) => {
+  return {
+    ...state,
+    phase: state.corners.every(corner => corner.clicked) ?
+      phases.CATCH : state.phase,
+  };
+};
+
 const boxPhase = (state, action) => {
   switch (action.type) {
     case types.CLICK:
@@ -66,13 +81,13 @@ const boxPhase = (state, action) => {
 
       switch (object) {
         case objects.BOX_CORNER:
-          if (state.boxCenterClicked && index === 0 || state.corners[index - 1].clicked) {
-            return {
+          if (state.boxCenterClicked && (index === 0 || state.corners[index - 1].clicked)) {
+            return checkForCatch({
               ...state,
               corners: state.corners.map((box, _index) =>
                 (_index === index) ? { ...box, clicked: true } : box
-              )
-            };
+              ),
+            });
           }
           return state;
 
@@ -92,9 +107,34 @@ const boxPhase = (state, action) => {
   }
 };
 
+const catchPhase = (state, action) => {
+  switch (action.type) {
+    case types.CLICK:
+      const { object, index } = action.options;
+
+      switch (object) {
+        case objects.SEED:
+          return {
+            ...state,
+            seeds: state.seeds.map((seed, _index) =>
+              (_index === index) ? { ...seed, clicked: true } : seed
+            ),
+          };
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
 const phaseFunctions = {
   [phases.SMASH]: smashPhase,
   [phases.BOX]: boxPhase,
+  [phases.CATCH]: catchPhase,
 };
 
 export default function game(state = initialState, action) {

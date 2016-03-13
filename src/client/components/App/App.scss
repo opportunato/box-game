@@ -4,7 +4,9 @@ $rock-height: 583px;
 $rock-width: 640px;
 $box-size: 433px;
 $button-size: 151px;
-$corner-size: 56px;
+$corner-size: 215px;
+$corner-spot-size: 56px;
+$seed-size: 39px;
 
 button {
   border: none;
@@ -26,7 +28,8 @@ button {
 }
 
 .rock,
-.box {
+.box,
+.box-placeholder {
   position: absolute;
 
   left: 50%;
@@ -54,13 +57,16 @@ button {
   }
 }
 
+.box-placeholder,
 .box {
   height: $box-size;
   width: $box-size;
 
   margin-left: - $box-size/2;
   margin-top: - $box-size/2;
+}
 
+.box {
   background-image: url("./box/base.png");
   background-repeat: no-repeat;
 }
@@ -83,11 +89,15 @@ button {
   }
 }
 
-.corner {
+.box-placeholder > .center {
+  background-image: url("./box/center.png");
+}
+
+.corner-spot {
   position: absolute;
 
-  height: $corner-size;
-  width: $corner-size;
+  height: $corner-spot-size;
+  width: $corner-spot-size;
 
   border-radius: 100%;
 
@@ -121,5 +131,82 @@ button {
 
   &.clicked {
     background-image: url("./box/corner-spot-active.png");
+  }
+}
+
+.corner {
+  position: absolute;
+
+  height: $corner-size;
+  width: $corner-size;
+
+  &.top-right {
+    right: -60px;
+    top: -60px;
+
+    background-image: url("./box/corner-top-right.png");
+  }
+
+  &.top-left {
+    left: -60px;
+    top: -60px;
+
+    background-image: url("./box/corner-top-left.png");
+  }
+
+  &.bottom-right {
+    right: -60px;
+    bottom: -60px;
+
+    background-image: url("./box/corner-bottom-right.png");
+  }
+
+  &.bottom-left {
+    left: -60px;
+    bottom: -60px;
+
+    background-image: url("./box/corner-bottom-left.png");
+  }
+}
+
+.seed {
+  position: absolute;
+
+  height: $seed-size;
+  width: $seed-size;
+
+  border: 1px solid black;
+  background-color: #F5FBA4;
+
+  &.clicked {
+    display: none;
+  }
+
+  &.top,
+  &.bottom {
+    left: 50%;
+    margin-left: -$seed-size/2;
+  }
+
+  &.left,
+  &.right {
+    top: 50%;
+    margin-top: -$seed-size/2;
+  }
+
+  &.top {
+    top: -14px;
+  }
+
+  &.bottom {
+    bottom: -14px;
+  }
+
+  &.left {
+    left: -14px;
+  }
+
+  &.right {
+    right: -14px;
   }
 }

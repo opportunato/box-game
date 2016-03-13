@@ -19,6 +19,7 @@ class App extends Component {
   static propTypes = {
     phase: PropTypes.string.isRequired,
     corners: PropTypes.array.isRequired,
+    seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
     smashClicks: PropTypes.number.isRequired,
@@ -31,7 +32,7 @@ class App extends Component {
   }
 
   render() {
-    const { phase, corners, smashClicks, boxCenterClicked } = this.props;
+    const { phase, seeds, corners, smashClicks, boxCenterClicked } = this.props;
 
     return (
       <div className={ s.root }>
@@ -58,7 +59,7 @@ class App extends Component {
                   key = { index }
                   className = {
                     classNames({
-                      [s.corner]: true,
+                      [s['corner-spot']]: true,
                       [s[corner.position]]: true,
                       [s.clicked]: corner.clicked,
                       [s.clickable]: boxCenterClicked,
@@ -74,6 +75,45 @@ class App extends Component {
             />
           </div>
         }
+        {
+          phase === phases.CATCH &&
+          <div className = { s['box-placeholder'] }>
+            {
+              [
+                'top-left',
+                'bottom-right',
+                'bottom-left',
+                'top-right',
+              ].map(position =>
+                <div
+                  key = { position }
+                  className = {
+                    classNames({
+                      [s.corner]: true,
+                      [s[position]]: true,
+                    })
+                  }
+                />
+              )
+            }
+            {
+              seeds.map((seed, index) =>
+                <div
+                  key = { seed.position }
+                  className = {
+                    classNames({
+                      [s.seed]: true,
+                      [s.clicked]: seed.clicked,
+                      [s[seed.position]]: true,
+                    })
+                  }
+                  onClick = { this.click.bind(this, { object: objects.SEED, index }) }
+                />
+              )
+            }
+            <div className = { s.center } />
+          </div>
+        }
       </div>
     );
   }
@@ -83,6 +123,7 @@ class App extends Component {
 export default connect(
   state => ({
     corners: state.corners,
+    seeds: state.seeds,
     phase: state.phase,
     smashClicks: state.smashClicks,
     boxCenterClicked: state.boxCenterClicked,
