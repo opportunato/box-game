@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
-import { click } from '../../actions';
+import { click, mouseMove } from '../../actions';
 
 import s from './App.scss';
 
@@ -22,7 +22,9 @@ class App extends Component {
     seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
+    mouseMove: PropTypes.func.isRequired,
     smashClicks: PropTypes.number.isRequired,
+    glowCoords: PropTypes.object.isRequired,
   }
 
   click(options, e) {
@@ -31,8 +33,21 @@ class App extends Component {
     this.props.click(options);
   }
 
+  mouseMove(e) {
+    const { pageX, pageY } = e;
+    const container = this.refs.gliph;
+
+    this.props.mouseMove({
+      object: objects.GLIPH,
+      coords: {
+        x: pageX - (window.innerWidth - container.offsetWidth) / 2,
+        y: pageY - (window.innerHeight - container.offsetHeight) / 2,
+      }
+    });
+  }
+
   render() {
-    const { phase, seeds, corners, smashClicks, boxCenterClicked } = this.props;
+    const { phase, seeds, corners, smashClicks, boxCenterClicked, glowCoords } = this.props;
 
     return (
       <div className={ s.root }>
@@ -49,7 +64,7 @@ class App extends Component {
           />
         }
         {
-          phase === phases.BOX &&
+          [phases.BOX, phases.SOUND].indexOf(phase) > -1 &&
           <div
             className = { s.box }
           >
@@ -73,6 +88,24 @@ class App extends Component {
               className = { s.center }
               onClick = { this.click.bind(this, { object: objects.BOX_CENTER }) }
             />
+            {
+              phase === phases.SOUND &&
+              <div
+                className = { s.glow }
+                style = {{
+                  left: glowCoords.x,
+                  top: glowCoords.y,
+                }}
+              />
+            }
+            {
+              phase === phases.SOUND &&
+              <div
+                ref = "gliph"
+                className = { s.gliph }
+                onMouseMove = { this.mouseMove.bind(this) }
+              />
+            }
           </div>
         }
         {
@@ -126,9 +159,11 @@ export default connect(
     seeds: state.seeds,
     phase: state.phase,
     smashClicks: state.smashClicks,
+    glowCoords: state.glowCoords,
     boxCenterClicked: state.boxCenterClicked,
   }),
   {
     click,
+    mouseMove
   }
 )(App);

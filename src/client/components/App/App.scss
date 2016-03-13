@@ -29,7 +29,9 @@ button {
 
 .rock,
 .box,
-.box-placeholder {
+.box-placeholder,
+.glow,
+.gliph {
   position: absolute;
 
   left: 50%;
@@ -58,7 +60,9 @@ button {
 }
 
 .box-placeholder,
-.box {
+.box,
+.gliph,
+.glow {
   height: $box-size;
   width: $box-size;
 
@@ -68,6 +72,22 @@ button {
 
 .box {
   background-image: url("./box/base.png");
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+.glow {
+  background-image: url("./box/glow-01.png");
+  background-repeat: no-repeat;
+  background-size: $box-size;
+
+  left: -1000px;
+  top: -1000px;
+}
+
+.gliph {
+  background-image: url("./box/gliph.png");
   background-repeat: no-repeat;
 }
 
