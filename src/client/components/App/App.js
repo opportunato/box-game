@@ -41,8 +41,16 @@ class App extends Component {
 
   click(options, e) {
     e.preventDefault();
+    e.stopPropagation();
 
     this.props.click(options);
+  }
+
+  clickDialog(e) {
+    if (this.props.phase !== phases.DIALOG || !this.props.dialog) return;
+    e.preventDefault();
+
+    this.props.click({ object: objects.TEXT, });
   }
 
   lenseMove(e) {
@@ -93,6 +101,7 @@ class App extends Component {
       <div
         className={ s.root }
         onMouseMove={ this.lenseMove.bind(this) }
+        onClick={this.clickDialog.bind(this)}
       >
         { phase === phases.SMASH && <Rock /> }
         {
@@ -242,10 +251,7 @@ class App extends Component {
         }
         {
           phase === phases.DIALOG && dialog &&
-          <div
-            className = { s['dialog-speech'] }
-            onClick = { this.click.bind(this, { object: objects.TEXT }) }
-          >
+          <div className = { s['dialog-speech'] }>
             { dialog.text }
           </div>
         }

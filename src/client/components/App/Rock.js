@@ -20,9 +20,7 @@ class Rock extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      x: 0,
-    }
+    this.state = { x: 0, };
   }
 
   getStyles() {

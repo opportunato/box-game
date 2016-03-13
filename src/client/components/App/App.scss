@@ -316,24 +316,37 @@ button {
   position: absolute;
 
   color: white;
-  width: 100px;
+  width: 600px;
 
   top: 50px;
   left: 50%;
-  margin-left: -50px;
-  text-align: center;
+  margin-left: -300px;
+
+  font-size: 20px;
+  line-height: 30px;
 }
 
 .dialog-options {
   position: absolute;
 
   color: white;
-  width: 300px;
+  font-size: 20px;
+
+  width: 600px;
 
   bottom: 50px;
   left: 50%;
-  margin-left: -150px;
-  text-align: center;
+  margin-left: -300px;
+
+  cursor: pointer;
+
+  > div {
+    margin-bottom: 10px;
+
+    &:hover {
+      color: #c98002;
+    }
+  }
 }
 
 .lense {

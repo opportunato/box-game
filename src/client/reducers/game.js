@@ -22,34 +22,64 @@ const sidePositions = [
 
 const dialogs = [
   {
-    text: '...',
+    text: 'Holy fuck! Finally! I thought you will never get it right! Carbon based lifeforms are slow as retarded pulsars. Never trust the uglerodies…оh...khm-khm!',
   },
   {
-    text: '...',
+    text: 'Bend your knees and behold the Ambassador of Gammaphage Complex, Whisker of Velvet Borealis and Veteran of Gamma-ray Holocaust — Makhnatkatone #f8f8f5!',
   },
   {
-    text: '...',
+    text: 'Yeah. That’s me.',
+  },
+  {
+    text: 'You found The First-Contact Box and now your species are granted with an honor to become a part of the Cluster Empire. We are multipolitical body that governs thousand of worlds with wisdom of superposition and liquid dynamics. Join us or cease to exist.',
+  },
+  {
+    text: 'Not so fast. At first you must pass The Test. It will show us how far your civilization come on the path of moral and intelligent development. It won’t be hard. Just one question and one correct answer.',
+  },
+  {
+    text: 'What will happen If you are wrong? Hm. Do you know how The Quantum Whip works?  You don’t wanna know. Trust me It’s ugly.',
+  },
+  {
+    text: 'So it goes like this… Suppose you are in asteroid mine extracting cobalt and shit. А trolley is hurtling down a track towards five living organisms. They call them workers You are on a bridge under which it will pass, and you can stop it by putting something very heavy in front of it.',
+  },
+  {
+    text: 'As it happens, there is a very big living organism next to you. They call it Fat Ass. Your only way to stop the trolley is to push Fat Ass over the bridge and onto the track, killing one to save five. How should you proceed?',
     options: [
-      { text: 'Completely disgusting' },
-      { text: 'I would gladly do that' },
-      { text: 'I don\'t know' },
+      { text: 'KILL THE FAT!' },
+      { text: 'Non-intrusion is a bliss.' },
+      { text: 'Jump yourself and see what happens.' },
     ]
   },
   {
-    text: '...',
+    text: 'Really???',
+  },
+  {
+    text: 'Bha-hha-ha. You know what. NOBODY GIVES A FUCK! Do what you want and come what may. This is the only governing principle of the Universe.'
+  },
+  {
+    text: 'Relax-Relax. There is no Cluster Empire, no test. I am just fucking with. Ha-ha!  Did you believe all the shit I said? So you are even stupider than you look. From now on I will call your kind — Dumblings! Dumb-dumb-dumb.'
+  },
+  {
+    text: 'Hey! Keep it up. You know what. Today is your lucky day. I mean you are LUCKY as FUCK. I am a Stardust Dealer. You freed me from millennial enslavement and I grant you one wish. ASK ME EVERYTHING! What do you want?',
     options: [
       {
-        text: 'I want peace',
-        response: 'No can do',
+        text: 'Immortality',
+        response: 'There is no such thing as Immortality. The Universe is finite. Everything and everyone you know will perish. Remember that  Dumbling and try again.',
       },
       {
-        text: 'I want gold',
-        response: 'No can do',
+        text: 'All treasures in the Universe',
+        response: 'Eat what you can digest. The Concentration of matter in one hands is fatal to the world. Learn radical theory and try again, Dumbling!',
       },
       {
-        text: 'I want cola',
+        text: 'The Ultimate Solution',
       },
     ]
+  },
+  {
+    text: 'Good сhoice! Take what you want and use it wisely. It’s time for me to go. Remember what i said:',
+  },
+  {
+    text: 'Dumb-dumb-dumbling!',
   }
 ];
 
@@ -69,7 +99,7 @@ const gliphCoords = [
 ];
 
 const initialState = {
-  phase: phases.SMASH,
+  phase: phases.DIALOG,
 
   smashClicks: 0,
 
@@ -85,7 +115,7 @@ const initialState = {
   gliphIndex: 0,
 
   plantClicked: false,
-  jinnSize: 1,
+  jinnSize: 4,
 
   dialog: {
     ...dialogs[0],
