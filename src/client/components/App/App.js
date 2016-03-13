@@ -103,7 +103,6 @@ class App extends Component {
         onMouseMove={ this.lenseMove.bind(this) }
         onClick={this.clickDialog.bind(this)}
       >
-        { phase === phases.SMASH && <Rock /> }
         {
           [phases.BOX, phases.SOUND].indexOf(phase) > -1 &&
           <div
@@ -285,6 +284,7 @@ class App extends Component {
             onClick = { this.click.bind(this, { object: objects.LENSE }) }
           />
         }
+        <Rock />
       </div>
     );
   }

@@ -42,10 +42,15 @@ button {
   top: 50%;
 }
 
-.rock {
+.rock,
+.crack {
+  position: absolute;
+
   height: $rock-size;
   width: $rock-size;
+}
 
+.rock {
   margin-left: - $rock-size/2;
   margin-top: - $rock-size/2;
 
@@ -62,6 +67,13 @@ button {
   &.clicked-3 {
     background-position-x: -3 * $rock-size;
   }
+}
+
+.crack {
+  left: 0;
+  top: 0;
+
+  background-size: $rock-size;
 }
 
 .box-placeholder,

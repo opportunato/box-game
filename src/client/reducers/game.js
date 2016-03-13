@@ -99,11 +99,13 @@ const gliphCoords = [
 ];
 
 const initialState = {
-  phase: phases.DIALOG,
+  phase: phases.SMASH,
 
   smashClicks: 0,
 
   boxCenterClicked: false,
+
+  rockCracked: false,
 
   glowCoords: {
     x: null,
@@ -165,6 +167,7 @@ const smashPhase = (state, action) => {
             return {
               ...state,
               phase: phases.BOX,
+              rockCracked: true,
             };
           }
           return {
