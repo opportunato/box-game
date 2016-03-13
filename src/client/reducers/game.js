@@ -51,6 +51,8 @@ const initialState = {
 
   gliphIndex: 0,
 
+  plantClicked: false,
+
   corners: range(0, 4).map(number => ({
     clicked: false,
     position: cornerPositions[number]
@@ -186,6 +188,15 @@ const soundPhase = (state, action) => {
   }
 };
 
+const allSeedsCaught = (state) => {
+  const allCaught = state.seeds.every(seed => seed.clicked);
+
+  return {
+    ...state,
+    phase: allCaught ? phases.GROWTH : state.phase,
+  };
+};
+
 const catchPhase = (state, action) => {
   switch (action.type) {
     case types.CLICK:
@@ -193,11 +204,40 @@ const catchPhase = (state, action) => {
 
       switch (object) {
         case objects.SEED:
-          return {
+          return allSeedsCaught({
             ...state,
+            inventory: state.inventory.concat('seed'),
             seeds: state.seeds.map((seed, _index) =>
               (_index === index) ? { ...seed, clicked: true } : seed
             ),
+          });
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
+const growthPhase = (state, action) => {
+  switch (action.type) {
+    case types.CLICK:
+      const { object } = action.options;
+
+      switch (object) {
+        case objects.PLANT:
+          return {
+            ...state,
+            plantClicked: true
+          };
+
+        case objects.FLOWER:
+          return {
+            ...state,
+            phase: phases.JINN,
           };
 
         default:
@@ -215,6 +255,7 @@ const phaseFunctions = {
   [phases.BOX]: boxPhase,
   [phases.SOUND]: soundPhase,
   [phases.CATCH]: catchPhase,
+  [phases.GROWTH]: growthPhase,
 };
 
 export default function game(state = initialState, action) {

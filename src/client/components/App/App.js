@@ -21,6 +21,7 @@ class App extends Component {
     corners: PropTypes.array.isRequired,
     seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
+    plantClicked: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
     smashClicks: PropTypes.number.isRequired,
@@ -57,6 +58,7 @@ class App extends Component {
       corners,
       smashClicks,
       boxCenterClicked,
+      plantClicked,
       glowCoords,
       glowOpacity,
       gliphIndex,
@@ -141,7 +143,9 @@ class App extends Component {
                       [s[position]]: true,
                     })
                   }
-                />
+                >
+                  <div className = { s.hatch } />
+                </div>
               )
             }
             {
@@ -159,7 +163,6 @@ class App extends Component {
                 />
               )
             }
-            <div className = { s.center } />
           </div>
         }
         <div className = { s.inventory }>
@@ -174,6 +177,27 @@ class App extends Component {
             )
           }
         </div>
+        {
+          phase === phases.GROWTH && !plantClicked &&
+          <div
+            className = { s.plant }
+            onClick = { this.click.bind(this, { object: objects.PLANT }) }
+          />
+        }
+        {
+          [phases.SMASH, phases.BOX, phases.SOUND].indexOf(phase) === -1 &&
+          <div
+            className = { s.center + ' ' + s.separate }
+          >
+            {
+              phase === phases.GROWTH && plantClicked &&
+              <div
+                className = { s.flower }
+                onClick = { this.click.bind(this, { object: objects.FLOWER }) }
+              />
+            }
+          </div>
+        }
       </div>
     );
   }
@@ -191,6 +215,7 @@ export default connect(
     gliphIndex: state.gliphIndex,
     inventory: state.inventory,
     boxCenterClicked: state.boxCenterClicked,
+    plantClicked: state.plantClicked,
   }),
   {
     click,

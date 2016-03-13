@@ -8,6 +8,7 @@ $corner-size: 215px;
 $corner-spot-size: 56px;
 $seed-size: 39px;
 $item-size: 30px;
+$flower-size: 227px;
 
 button {
   border: none;
@@ -107,10 +108,10 @@ button {
   &:active {
     background-image: url("./box/button-pressed.png");
   }
-}
 
-.box-placeholder > .center {
-  background-image: url("./box/center.png");
+  &.separate {
+    background-image: url("./box/center.png");
+  }
 }
 
 .corner-spot {
@@ -165,6 +166,11 @@ button {
     top: -60px;
 
     background-image: url("./box/corner-top-right.png");
+
+    .hatch {
+      right: 36px;
+      top: 36px;
+    }
   }
 
   &.top-left {
@@ -172,6 +178,11 @@ button {
     top: -60px;
 
     background-image: url("./box/corner-top-left.png");
+
+    .hatch {
+      left: 36px;
+      top: 36px;
+    }
   }
 
   &.bottom-right {
@@ -179,6 +190,11 @@ button {
     bottom: -60px;
 
     background-image: url("./box/corner-bottom-right.png");
+
+    .hatch {
+      right: 36px;
+      bottom: 36px;
+    }
   }
 
   &.bottom-left {
@@ -186,7 +202,21 @@ button {
     bottom: -60px;
 
     background-image: url("./box/corner-bottom-left.png");
+
+    .hatch {
+      left: 36px;
+      bottom: 36px;
+    }
   }
+}
+
+.hatch {
+  position: absolute;
+
+  height: $corner-spot-size;
+  width: $corner-spot-size;
+
+  background-image: url("./box/hatch.png");
 }
 
 .seed {
@@ -246,4 +276,19 @@ button {
     height: $item-size;
     width: $item-size;
   }
+}
+
+.plant {
+  height: 100%;
+  width: 100%;
+
+  background-image: url("./plant/plant.png");
+}
+
+.flower {
+  height: $flower-size;
+  width: $flower-size;
+
+  background-image: url("./plant/flower.png");
+  background-repeat: none;
 }
