@@ -26,6 +26,8 @@ class App extends Component {
     smashClicks: PropTypes.number.isRequired,
     inventory: PropTypes.array.isRequired,
     glowCoords: PropTypes.object.isRequired,
+    glowOpacity: PropTypes.number.isRequired,
+    gliphIndex: PropTypes.number.isRequired,
   }
 
   click(options, e) {
@@ -55,7 +57,9 @@ class App extends Component {
       corners,
       smashClicks,
       boxCenterClicked,
-      glowCoords
+      glowCoords,
+      glowOpacity,
+      gliphIndex,
     } = this.props;
 
     return (
@@ -104,6 +108,8 @@ class App extends Component {
                 style = {{
                   left: glowCoords.x,
                   top: glowCoords.y,
+                  opacity: glowOpacity,
+                  backgroundImage: `url(${require(`./box/glow-0${gliphIndex + 1}.png`)})`
                 }}
               />
             }
@@ -181,6 +187,8 @@ export default connect(
     phase: state.phase,
     smashClicks: state.smashClicks,
     glowCoords: state.glowCoords,
+    glowOpacity: state.glowOpacity,
+    gliphIndex: state.gliphIndex,
     inventory: state.inventory,
     boxCenterClicked: state.boxCenterClicked,
   }),

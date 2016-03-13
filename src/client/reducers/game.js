@@ -47,6 +47,8 @@ const initialState = {
     y: null
   },
 
+  glowOpacity: 0,
+
   gliphIndex: 0,
 
   corners: range(0, 4).map(number => ({
@@ -133,15 +135,20 @@ const boxPhase = (state, action) => {
   }
 };
 
-const reachedGliph = (state) => {
+const gliphDistance = (state) => {
   const { glowCoords, gliphIndex } = state;
 
-  const isGliphReached = Math.sqrt(
+  return Math.sqrt(
     Math.pow(glowCoords.x - gliphCoords[gliphIndex].x, 2) +
     Math.pow(glowCoords.y - gliphCoords[gliphIndex].y, 2)
-  ) < 100;
+  );
+};
 
-  const collectedAllGliphs = reachedGliph &&
+const reachedGliph = (state) => {
+  const { gliphIndex } = state;
+  const isGliphReached = gliphDistance(state) < 25;
+
+  const collectedAllGliphs = isGliphReached &&
     gliphIndex === gliphCoords.length - 1;
 
   return {
@@ -150,6 +157,10 @@ const reachedGliph = (state) => {
     phase: collectedAllGliphs ? phases.CATCH : state.phase,
     gliphIndex: isGliphReached ? state.gliphIndex + 1 : state.gliphIndex,
   };
+};
+
+const getGlowOpacity = (state) => {
+  return (400 - gliphDistance(state)) / 400;
 };
 
 const soundPhase = (state, action) => {
@@ -162,6 +173,7 @@ const soundPhase = (state, action) => {
           return reachedGliph({
             ...state,
             glowCoords: clone(coords),
+            glowOpacity: getGlowOpacity(state),
           });
 
         default:
