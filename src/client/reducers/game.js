@@ -117,7 +117,7 @@ const initialState = {
   gliphIndex: 0,
 
   plantClicked: false,
-  jinnSize: 0,
+  jinnSize: 1,
 
   dialog: {
     ...dialogs[0],
