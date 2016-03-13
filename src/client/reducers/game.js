@@ -68,8 +68,13 @@ const gliphCoords = [
   }
 ];
 
+const earthCoords = {
+  x: 100,
+  y: 100,
+};
+
 const initialState = {
-  phase: phases.SMASH,
+  phase: phases.LENSE,
 
   smashClicks: 0,
 
@@ -87,9 +92,11 @@ const initialState = {
   plantClicked: false,
   jinnSize: 1,
 
-  dialog: {
-    ...dialogs[0],
-    index: 0
+  dialog: null,
+
+  lenseCoords: {
+    x: null,
+    y: null,
   },
 
   corners: range(0, 4).map(number => ({
@@ -370,6 +377,18 @@ const jinnPhase = (state, action) => {
   }
 };
 
+const nextDialog = (state) => {
+  const nextIndex = state.dialog.index + 1;
+
+  return {
+    ...state,
+    dialog: dialogs[nextIndex] ? {
+      ...dialogs[nextIndex],
+      index: nextIndex,
+    } : null,
+  };
+};
+
 const dialogPhase = (state, action) => {
   switch (action.type) {
     case types.CLICK:
@@ -382,13 +401,7 @@ const dialogPhase = (state, action) => {
           const option = dialog.options[index];
 
           if (!option.response) {
-            return {
-              ...state,
-              dialog: {
-                ...dialogs[dialog.index + 1],
-                index: dialog.index + 1,
-              },
-            };
+            return nextDialog(state);
           }
           return {
             ...state,
@@ -402,15 +415,37 @@ const dialogPhase = (state, action) => {
 
         case objects.TEXT:
           if (!dialog.options) {
-            return {
-              ...state,
-              dialog: {
-                ...dialogs[dialog.index + 1],
-                index: dialog.index + 1,
-              },
-            };
+            return nextDialog(state);
           }
           return state;
+
+        case objects.LENSE:
+          return {
+            ...state,
+            phase: phases.LENSE,
+          };
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
+const lensePhase = (state, action) => {
+  switch (action.type) {
+    case types.MOUSE_MOVE:
+      const { object, coords } = action.options;
+
+      switch (object) {
+        case objects.LENSE:
+          return {
+            ...state,
+            lenseCoords: clone(coords),
+          };
 
         default:
           return state;
@@ -431,6 +466,7 @@ const phaseFunctions = {
   [phases.GROWTH]: growthPhase,
   [phases.JINN]: jinnPhase,
   [phases.DIALOG]: dialogPhase,
+  [phases.LENSE]: lensePhase,
 };
 
 export default function game(state = initialState, action) {

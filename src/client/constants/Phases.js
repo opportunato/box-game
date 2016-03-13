@@ -6,3 +6,4 @@ export const PLANT = 'PLANT';
 export const GROWTH = 'GROWTH';
 export const DIALOG = 'DIALOG';
 export const JINN = 'JINN';
+export const LENSE = 'LENSE';

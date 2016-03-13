@@ -30,16 +30,31 @@ class App extends Component {
     smashClicks: PropTypes.number.isRequired,
     inventory: PropTypes.object.isRequired,
     glowCoords: PropTypes.object.isRequired,
+    lenseCoords: PropTypes.object.isRequired,
     glowOpacity: PropTypes.number.isRequired,
     gliphIndex: PropTypes.number.isRequired,
     jinnSize: PropTypes.number.isRequired,
-    dialog: PropTypes.object.isRequired,
+    dialog: PropTypes.object,
   }
 
   click(options, e) {
     e.preventDefault();
 
     this.props.click(options);
+  }
+
+  lenseMove(e) {
+    if (this.props.phase !== phases.LENSE) return;
+
+    const { pageX, pageY } = e;
+
+    this.props.mouseMove({
+      object: objects.LENSE,
+      coords: {
+        x: pageX,
+        y: pageY,
+      }
+    });
   }
 
   mouseMove(e) {
@@ -68,12 +83,16 @@ class App extends Component {
       glowCoords,
       glowOpacity,
       gliphIndex,
+      lenseCoords,
       jinnSize,
       dialog,
     } = this.props;
 
     return (
-      <div className={ s.root }>
+      <div
+        className={ s.root }
+        onMouseMove={ this.lenseMove.bind(this) }
+      >
         {
           phase === phases.SMASH &&
           <div
@@ -208,6 +227,7 @@ class App extends Component {
         }
         {
           [phases.SMASH, phases.BOX, phases.SOUND].indexOf(phase) === -1 &&
+          dialog &&
           <div
             className = { s.center + ' ' + s.separate }
           >
@@ -219,7 +239,8 @@ class App extends Component {
               />
             }
             {
-              [phases.JINN, phases.DIALOG].indexOf(phase) > -1 &&
+              (phase === phases.JINN ||
+              (phase === phases.DIALOG && dialog)) &&
               <div
                 style = {{
                   backgroundImage: `url(${require(`./jinn/jinn-0${clamp(jinnSize, 4)}.png`)})`
@@ -230,7 +251,7 @@ class App extends Component {
           </div>
         }
         {
-          phase === phases.DIALOG &&
+          phase === phases.DIALOG && dialog &&
           <div
             className = { s['dialog-speech'] }
             onClick = { this.click.bind(this, { object: objects.TEXT }) }
@@ -239,7 +260,7 @@ class App extends Component {
           </div>
         }
         {
-          phase === phases.DIALOG &&
+          phase === phases.DIALOG && (dialog || {}).options &&
           <div className = { s['dialog-options'] }>
             {
               (dialog.options || []).map((option, index) =>
@@ -252,6 +273,21 @@ class App extends Component {
               )
             }
           </div>
+        }
+        {
+          ((phase === phases.DIALOG && !dialog) ||
+            phase === phases.LENSE) &&
+          <div
+            className = {classNames({
+              [s.lense]: true,
+              [s.big]: phase === phases.LENSE,
+            })}
+            style = {{
+              left: lenseCoords.x,
+              top: lenseCoords.y,
+            }}
+            onClick = { this.click.bind(this, { object: objects.LENSE }) }
+          />
         }
       </div>
     );
@@ -274,6 +310,7 @@ export default connect(
     boxCenterClicked: state.boxCenterClicked,
     plantClicked: state.plantClicked,
     dialog: state.dialog,
+    lenseCoords: state.lenseCoords,
   }),
   {
     click,

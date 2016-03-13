@@ -8,3 +8,4 @@ export const PLANT = 'PLANT';
 export const FLOWER = 'FLOWER';
 export const TEXT = 'TEXT';
 export const OPTION = 'OPTION';
+export const LENSE = 'LENSE';
