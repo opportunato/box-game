@@ -24,6 +24,7 @@ class App extends Component {
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
     smashClicks: PropTypes.number.isRequired,
+    inventory: PropTypes.array.isRequired,
     glowCoords: PropTypes.object.isRequired,
   }
 
@@ -47,7 +48,15 @@ class App extends Component {
   }
 
   render() {
-    const { phase, seeds, corners, smashClicks, boxCenterClicked, glowCoords } = this.props;
+    const {
+      phase,
+      seeds,
+      inventory,
+      corners,
+      smashClicks,
+      boxCenterClicked,
+      glowCoords
+    } = this.props;
 
     return (
       <div className={ s.root }>
@@ -147,6 +156,18 @@ class App extends Component {
             <div className = { s.center } />
           </div>
         }
+        <div className = { s.inventory }>
+          {
+            inventory.map(item =>
+              <div
+                key = { item }
+                style = {{
+                  backgroundImage: `url(${require(`./inventory/${item}.png`)})`
+                }}
+              />
+            )
+          }
+        </div>
       </div>
     );
   }
@@ -160,6 +181,7 @@ export default connect(
     phase: state.phase,
     smashClicks: state.smashClicks,
     glowCoords: state.glowCoords,
+    inventory: state.inventory,
     boxCenterClicked: state.boxCenterClicked,
   }),
   {

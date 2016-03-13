@@ -7,6 +7,7 @@ $button-size: 151px;
 $corner-size: 215px;
 $corner-spot-size: 56px;
 $seed-size: 39px;
+$item-size: 30px;
 
 button {
   border: none;
@@ -228,5 +229,22 @@ button {
 
   &.right {
     right: -14px;
+  }
+}
+
+.inventory {
+  position: absolute;
+
+  bottom: 30px;
+  left: 50%;
+  margin-left: - $box-size/2;
+
+  width: $box-size;
+
+  display: flex;
+
+  > * {
+    height: $item-size;
+    width: $item-size;
   }
 }
