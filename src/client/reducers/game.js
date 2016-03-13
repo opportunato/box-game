@@ -89,11 +89,11 @@ const gliphCoords = [
     y: 30,
   },
   {
-    x: 400,
-    y: 300,
+    x: 200,
+    y: 200,
   },
   {
-    x: 400,
+    x: 250,
     y: 0,
   }
 ];
@@ -117,7 +117,7 @@ const initialState = {
   gliphIndex: 0,
 
   plantClicked: false,
-  jinnSize: 4,
+  jinnSize: 0,
 
   dialog: {
     ...dialogs[0],

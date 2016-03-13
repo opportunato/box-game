@@ -1,11 +1,11 @@
 @import "../base.css";
 
 $rock-size: 401px;
-$box-size: 433px;
-$button-size: 151px;
-$corner-size: 215px;
-$corner-spot-size: 56px;
-$seed-size: 39px;
+$box-size: 300px;
+$button-size: 101px;
+$corner-size: 150px;
+$corner-spot-size: 40px;
+$seed-size: 28px;
 $item-size: 30px;
 $flower-size: 227px;
 $jinn-height: 122px;
@@ -90,6 +90,7 @@ button {
 .box {
   background-image: url("./box/base.png");
   background-repeat: no-repeat;
+  background-size: $box-size;
 
   overflow: hidden;
 }
@@ -105,6 +106,7 @@ button {
 .gliph {
   background-image: url("./box/gliph.png");
   background-repeat: no-repeat;
+  background-size: $box-size;
 }
 
 .center {
@@ -119,6 +121,8 @@ button {
   margin-left: -$button-size/2;
   margin-top: -$button-size/2;
   outline: none;
+
+  background-size: $button-size;
 
   &:active {
     background-image: url("./box/button-pressed.png");
@@ -140,25 +144,26 @@ button {
   outline: none;
 
   background-position: center;
+  background-size: $corner-spot-size;
 
   &.top-right {
-    right: 36px;
-    top: 36px;
+    right: 27px;
+    top: 27px;
   }
 
   &.top-left {
-    left: 36px;
-    top: 36px;
+    left: 27px;
+    top: 27px;
   }
 
   &.bottom-right {
-    right: 36px;
-    bottom: 36px;
+    right: 27px;
+    bottom: 27px;
   }
 
   &.bottom-left {
-    left: 36px;
-    bottom: 36px;
+    left: 27px;
+    bottom: 27px;
   }
 
   &.clickable {
@@ -175,6 +180,8 @@ button {
 
   height: $corner-size;
   width: $corner-size;
+  background-size: $corner-size;
+  background-repeat: no-repeat;
 
   &.top-right {
     right: -60px;
@@ -183,8 +190,8 @@ button {
     background-image: url("./box/corner-top-right.png");
 
     .hatch {
-      right: 36px;
-      top: 36px;
+      right: 27px;
+      top: 27px;
     }
   }
 
@@ -195,8 +202,8 @@ button {
     background-image: url("./box/corner-top-left.png");
 
     .hatch {
-      left: 36px;
-      top: 36px;
+      left: 27px;
+      top: 27px;
     }
   }
 
@@ -207,8 +214,8 @@ button {
     background-image: url("./box/corner-bottom-right.png");
 
     .hatch {
-      right: 36px;
-      bottom: 36px;
+      right: 27px;
+      bottom: 27px;
     }
   }
 
@@ -230,6 +237,7 @@ button {
 
   height: $corner-spot-size;
   width: $corner-spot-size;
+  background-size: $corner-spot-size;
 
   background-image: url("./box/hatch.png");
 
@@ -264,19 +272,19 @@ button {
   }
 
   &.top {
-    top: -14px;
+    top: -25px;
   }
 
   &.bottom {
-    bottom: -14px;
+    bottom: -25px;
   }
 
   &.left {
-    left: -14px;
+    left: -25px;
   }
 
   &.right {
-    right: -14px;
+    right: -25px;
   }
 }
 
