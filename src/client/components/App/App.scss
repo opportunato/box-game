@@ -15,6 +15,13 @@ $base-size: 50px;
   margin-top: -3/2 * $base-size;;
 }
 
+.crystal {
+  height: 100%;
+  width: 100%;
+
+  background-color: red;
+}
+
 .top-left,
 .top-right,
 .bottom-right,

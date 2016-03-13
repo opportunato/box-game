@@ -1,1 +1,2 @@
-export const CLICK_BOX = 'CLICK_BOX';
+export const COLOR_CLICK_BOX = 'COLOR_CLICK_BOX';
+export const SMASH_CRYSTAL = 'SMASH_CRYSTAL';
