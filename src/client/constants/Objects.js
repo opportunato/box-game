@@ -6,3 +6,5 @@ export const GLIPH = 'GLIPH';
 export const HATCH = 'HATCH';
 export const PLANT = 'PLANT';
 export const FLOWER = 'FLOWER';
+export const TEXT = 'TEXT';
+export const OPTION = 'OPTION';

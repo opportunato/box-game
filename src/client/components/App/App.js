@@ -14,6 +14,8 @@ import classNames from 'classnames';
 
 import 'babel-polyfill';
 
+import { map, clamp } from 'lodash';
+
 class App extends Component {
 
   static propTypes = {
@@ -26,10 +28,12 @@ class App extends Component {
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
     smashClicks: PropTypes.number.isRequired,
-    inventory: PropTypes.array.isRequired,
+    inventory: PropTypes.object.isRequired,
     glowCoords: PropTypes.object.isRequired,
     glowOpacity: PropTypes.number.isRequired,
     gliphIndex: PropTypes.number.isRequired,
+    jinnSize: PropTypes.number.isRequired,
+    dialog: PropTypes.object.isRequired,
   }
 
   click(options, e) {
@@ -64,6 +68,8 @@ class App extends Component {
       glowCoords,
       glowOpacity,
       gliphIndex,
+      jinnSize,
+      dialog,
     } = this.props;
 
     return (
@@ -173,14 +179,24 @@ class App extends Component {
         }
         <div className = { s.inventory }>
           {
-            inventory.map((item, index) =>
+            map(inventory.gliphs, (item, index) =>
+              item ?
               <div
-                key = { `${item}-${index}` }
+                key = { `gliph-${index}` }
                 style = {{
-                  backgroundImage: `url(${require(`./inventory/${item}.png`)})`
+                  backgroundImage: `url(${require(`./inventory/gliph-0${+index + 1}.png`)})`
                 }}
-              />
+                onClick = { this.click.bind(this, { object: objects.GLIPH, index }) }
+              /> : null
             )
+          }
+          {
+            inventory.seedsNumber > 0 &&
+            <div
+              style = {{
+                backgroundImage: `url(${require(`./inventory/seed.png`)})`
+              }}
+            />
           }
         </div>
         {
@@ -202,6 +218,39 @@ class App extends Component {
                 onClick = { this.click.bind(this, { object: objects.FLOWER }) }
               />
             }
+            {
+              [phases.JINN, phases.DIALOG].indexOf(phase) > -1 &&
+              <div
+                style = {{
+                  backgroundImage: `url(${require(`./jinn/jinn-0${clamp(jinnSize, 4)}.png`)})`
+                }}
+                className = { s.jinn }
+              />
+            }
+          </div>
+        }
+        {
+          phase === phases.DIALOG &&
+          <div
+            className = { s['dialog-speech'] }
+            onClick = { this.click.bind(this, { object: objects.TEXT }) }
+          >
+            { dialog.text }
+          </div>
+        }
+        {
+          phase === phases.DIALOG &&
+          <div className = { s['dialog-options'] }>
+            {
+              (dialog.options || []).map((option, index) =>
+                <div
+                  key = { index }
+                  onClick = { this.click.bind(this, { object: objects.OPTION, index }) }
+                >
+                  { option.text }
+                </div>
+              )
+            }
           </div>
         }
       </div>
@@ -220,9 +269,11 @@ export default connect(
     glowCoords: state.glowCoords,
     glowOpacity: state.glowOpacity,
     gliphIndex: state.gliphIndex,
+    jinnSize: state.jinnSize,
     inventory: state.inventory,
     boxCenterClicked: state.boxCenterClicked,
     plantClicked: state.plantClicked,
+    dialog: state.dialog,
   }),
   {
     click,

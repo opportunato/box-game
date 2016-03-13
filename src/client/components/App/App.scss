@@ -9,6 +9,8 @@ $corner-spot-size: 56px;
 $seed-size: 39px;
 $item-size: 30px;
 $flower-size: 227px;
+$jinn-height: 122px;
+$jinn-width: 186px;
 
 button {
   border: none;
@@ -294,5 +296,41 @@ button {
   width: $flower-size;
 
   background-image: url("./plant/flower.png");
-  background-repeat: none;
+  background-repeat: no-repeat;
+}
+
+.jinn {
+  height: $jinn-height;
+  width: $jinn-width;
+
+  background-repeat: no-repeat;
+
+  position: absolute;
+  top: -$jinn-height;
+  left: 50%;
+  margin-left: -$jinn-width/2;
+}
+
+.dialog-speech {
+  position: absolute;
+
+  color: white;
+  width: 100px;
+
+  top: 50px;
+  left: 50%;
+  margin-left: -50px;
+  text-align: center;
+}
+
+.dialog-options {
+  position: absolute;
+
+  color: white;
+  width: 300px;
+
+  bottom: 50px;
+  left: 50%;
+  margin-left: -150px;
+  text-align: center;
 }

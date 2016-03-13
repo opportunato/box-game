@@ -20,6 +20,39 @@ const sidePositions = [
   'right',
 ];
 
+const dialogs = [
+  {
+    text: '...',
+  },
+  {
+    text: '...',
+  },
+  {
+    text: '...',
+    options: [
+      { text: 'Completely disgusting' },
+      { text: 'I would gladly do that' },
+      { text: 'I don\'t know' },
+    ]
+  },
+  {
+    text: '...',
+    options: [
+      {
+        text: 'I want peace',
+        response: 'No can do',
+      },
+      {
+        text: 'I want gold',
+        response: 'No can do',
+      },
+      {
+        text: 'I want cola',
+      },
+    ]
+  }
+];
+
 const gliphCoords = [
   {
     x: 10,
@@ -52,6 +85,12 @@ const initialState = {
   gliphIndex: 0,
 
   plantClicked: false,
+  jinnSize: 1,
+
+  dialog: {
+    ...dialogs[0],
+    index: 0
+  },
 
   corners: range(0, 4).map(number => ({
     clicked: false,
@@ -68,7 +107,15 @@ const initialState = {
     position: cornerPositions[number]
   })),
 
-  inventory: [],
+  inventory: {
+    gliphs: {
+      0: false,
+      1: false,
+      2: false,
+      3: false,
+    },
+    seedsNumber: 0,
+  },
 };
 
 const smashPhase = (state, action) => {
@@ -104,7 +151,8 @@ const allCornersClicked = (state) => {
 
   return {
     ...state,
-    inventory: allClicked ? state.inventory.concat('gliph-01') : state.inventory,
+    inventory: allClicked ?
+      { ...state.inventory, gliphs: { ...state.inventory.gliphs, 0: true } } : state.inventory,
     phase: allClicked ? phases.SOUND : state.phase,
   };
 };
@@ -160,7 +208,8 @@ const reachedGliph = (state) => {
 
   return {
     ...state,
-    inventory: isGliphReached ? state.inventory.concat(`gliph-0${gliphIndex + 2}`) : state.inventory,
+    inventory: isGliphReached ?
+      { ...state.inventory, gliphs: { ...state.inventory.gliphs, [gliphIndex + 1]: true } } : state.inventory,
     phase: collectedAllGliphs ? phases.CATCH : state.phase,
     gliphIndex: isGliphReached ? state.gliphIndex + 1 : state.gliphIndex,
   };
@@ -211,7 +260,7 @@ const catchPhase = (state, action) => {
         case objects.SEED:
           return allSeedsCaught({
             ...state,
-            inventory: state.inventory.concat('seed'),
+            inventory: { ...state.inventory, seedsNumber: state.inventory.seedNumber + 1 },
             seeds: state.seeds.map((seed, _index) =>
               (_index === index) ? { ...seed, clicked: true } : seed
             ),
@@ -245,7 +294,7 @@ const plantPhase = (state, action) => {
         case objects.HATCH:
           return allHatchesClicked({
             ...state,
-            inventory: state.inventory.slice(0, -1),
+            inventory: { ...state.inventory, seedsNumber: state.inventory.seedNumber - 1 },
             hatches: state.hatches.map((hatch, _index) =>
               (_index === index) ? { ...hatch, clicked: true } : hatch
             ),
@@ -290,6 +339,89 @@ const growthPhase = (state, action) => {
   }
 };
 
+const jinnGrown = (state) => {
+  return {
+    ...state,
+    phase: state.jinnSize === 5 ? phases.DIALOG : state.phase,
+  };
+};
+
+const jinnPhase = (state, action) => {
+  switch (action.type) {
+    case types.CLICK:
+      const { object, index } = action.options;
+
+      switch (object) {
+
+        case objects.GLIPH:
+          return jinnGrown({
+            ...state,
+            jinnSize: state.jinnSize + 1,
+            inventory: { ...state.inventory, gliphs: { ...state.inventory.gliphs, [index]: false } }
+          });
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
+const dialogPhase = (state, action) => {
+  switch (action.type) {
+    case types.CLICK:
+      const { object, index } = action.options;
+      const { dialog } = state;
+
+      switch (object) {
+
+        case objects.OPTION:
+          const option = dialog.options[index];
+
+          if (!option.response) {
+            return {
+              ...state,
+              dialog: {
+                ...dialogs[dialog.index + 1],
+                index: dialog.index + 1,
+              },
+            };
+          }
+          return {
+            ...state,
+            dialog: {
+              ...dialog,
+              text: option.response,
+              options: dialog.options.slice(0, index)
+                .concat(dialog.options.slice(index + 1))
+            },
+          };
+
+        case objects.TEXT:
+          if (!dialog.options) {
+            return {
+              ...state,
+              dialog: {
+                ...dialogs[dialog.index + 1],
+                index: dialog.index + 1,
+              },
+            };
+          }
+          return state;
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
 const phaseFunctions = {
   [phases.SMASH]: smashPhase,
   [phases.BOX]: boxPhase,
@@ -297,6 +429,8 @@ const phaseFunctions = {
   [phases.CATCH]: catchPhase,
   [phases.PLANT]: plantPhase,
   [phases.GROWTH]: growthPhase,
+  [phases.JINN]: jinnPhase,
+  [phases.DIALOG]: dialogPhase,
 };
 
 export default function game(state = initialState, action) {
