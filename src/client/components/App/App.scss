@@ -217,6 +217,10 @@ button {
   width: $corner-spot-size;
 
   background-image: url("./box/hatch.png");
+
+  &.clicked {
+    background-color: blue;
+  }
 }
 
 .seed {

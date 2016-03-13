@@ -19,6 +19,7 @@ class App extends Component {
   static propTypes = {
     phase: PropTypes.string.isRequired,
     corners: PropTypes.array.isRequired,
+    hatches: PropTypes.array.isRequired,
     seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
     plantClicked: PropTypes.bool.isRequired,
@@ -54,6 +55,7 @@ class App extends Component {
     const {
       phase,
       seeds,
+      hatches,
       inventory,
       corners,
       smashClicks,
@@ -126,7 +128,7 @@ class App extends Component {
           </div>
         }
         {
-          phase === phases.CATCH &&
+          [phases.CATCH, phases.PLANT].indexOf(phase) > -1 &&
           <div className = { s['box-placeholder'] }>
             {
               [
@@ -134,7 +136,7 @@ class App extends Component {
                 'bottom-right',
                 'bottom-left',
                 'top-right',
-              ].map(position =>
+              ].map((position, index) =>
                 <div
                   key = { position }
                   className = {
@@ -144,7 +146,11 @@ class App extends Component {
                     })
                   }
                 >
-                  <div className = { s.hatch } />
+                  <div
+                    clicked = { hatches[index].clicked }
+                    className = { s.hatch }
+                    onClick = { this.props.click.bind(this, { object: objects.HATCH, index }) }
+                  />
                 </div>
               )
             }
@@ -167,9 +173,9 @@ class App extends Component {
         }
         <div className = { s.inventory }>
           {
-            inventory.map(item =>
+            inventory.map((item, index) =>
               <div
-                key = { item }
+                key = { `${item}-${index}` }
                 style = {{
                   backgroundImage: `url(${require(`./inventory/${item}.png`)})`
                 }}
@@ -208,6 +214,7 @@ export default connect(
   state => ({
     corners: state.corners,
     seeds: state.seeds,
+    hatches: state.hatches,
     phase: state.phase,
     smashClicks: state.smashClicks,
     glowCoords: state.glowCoords,

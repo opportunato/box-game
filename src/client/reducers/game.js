@@ -63,6 +63,11 @@ const initialState = {
     position: sidePositions[number],
   })),
 
+  hatches: range(0, 4).map(number => ({
+    clicked: false,
+    position: cornerPositions[number]
+  })),
+
   inventory: [],
 };
 
@@ -193,7 +198,7 @@ const allSeedsCaught = (state) => {
 
   return {
     ...state,
-    phase: allCaught ? phases.GROWTH : state.phase,
+    phase: allCaught ? phases.PLANT : state.phase,
   };
 };
 
@@ -222,12 +227,47 @@ const catchPhase = (state, action) => {
   }
 };
 
+const allHatchesClicked = (state) => {
+  const allClicked = state.hatches.every(hatch => hatch.clicked);
+
+  return {
+    ...state,
+    phase: allClicked ? phases.GROWTH : state.phase,
+  };
+};
+
+const plantPhase = (state, action) => {
+  switch (action.type) {
+    case types.CLICK:
+      const { object, index } = action.options;
+
+      switch (object) {
+        case objects.HATCH:
+          return allHatchesClicked({
+            ...state,
+            inventory: state.inventory.slice(0, -1),
+            hatches: state.hatches.map((hatch, _index) =>
+              (_index === index) ? { ...hatch, clicked: true } : hatch
+            ),
+          });
+
+        default:
+          return state;
+      }
+      break;
+
+    default:
+      return state;
+  }
+};
+
 const growthPhase = (state, action) => {
   switch (action.type) {
     case types.CLICK:
       const { object } = action.options;
 
       switch (object) {
+
         case objects.PLANT:
           return {
             ...state,
@@ -255,6 +295,7 @@ const phaseFunctions = {
   [phases.BOX]: boxPhase,
   [phases.SOUND]: soundPhase,
   [phases.CATCH]: catchPhase,
+  [phases.PLANT]: plantPhase,
   [phases.GROWTH]: growthPhase,
 };
 
