@@ -1,8 +1,6 @@
 import path from 'path';
 import express from 'express';
 import nunjucks from 'nunjucks';
-import bunyan from 'bunyan';
-import axios from 'axios';
 
 // import React from 'react';
 // import ReactDOMServer from 'react-dom/server';

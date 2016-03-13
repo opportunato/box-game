@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "gulp hooks",
     "start": "NODE_ENV=development HOT_RELOAD=react-hot-loader NODEJS_PORT=3002 NODEJS_ADDR=localhost gulp",
-    "start-prod": "NODE_ENV=production LOCAL=true NODEJS_PORT=3002 node dist/prod/server.js",
+    "start-prod": "NODE_ENV=production LOCAL=true NODEJS_PORT=8000 NODEJS_ADDR=localhost node dist/prod/server.js",
     "build": "NODE_ENV=production gulp dist:build"
   },
   "devDependencies": {
