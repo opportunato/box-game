@@ -11,6 +11,7 @@ $flower-size: 227px;
 $jinn-height: 122px;
 $jinn-width: 186px;
 $lense-size: 103px;
+$center-gliph-size: 93px;
 
 button {
   border: none;
@@ -107,6 +108,31 @@ button {
   background-image: url("./box/gliph.png");
   background-repeat: no-repeat;
   background-size: $box-size;
+}
+
+.center-gliph {
+  position: absolute;
+
+  height: $center-gliph-size;
+  width: $center-gliph-size;
+
+  left: 50%;
+  top: 50%;
+
+  margin-left: -$center-gliph-size/2;
+  margin-top: -$center-gliph-size/2;
+
+  > div {
+    height: 100%;
+    width: 100%;
+
+    background-repeat: no-repeat;
+    background-size: $center-gliph-size;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
 
 .center {

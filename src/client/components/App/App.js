@@ -10,6 +10,7 @@ import { Motion, spring } from 'react-motion';
 import s from './App.scss';
 
 import Rock from './Rock';
+import CenterGliph from './CenterGliph';
 
 require('../base.css');
 
@@ -128,6 +129,7 @@ class App extends Component {
               className = { s.center }
               onClick = { this.click.bind(this, { object: objects.BOX_CENTER }) }
             />
+            <CenterGliph />
             {
               phase === phases.SOUND &&
               <div
