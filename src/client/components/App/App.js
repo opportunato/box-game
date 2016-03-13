@@ -20,39 +20,47 @@ class App extends Component {
     boxes: PropTypes.array.isRequired,
     colorClickBox: PropTypes.func.isRequired,
     smashCrystal: PropTypes.func.isRequired,
+    smashClicks: PropTypes.number.isRequired,
   }
 
   render() {
-    const { phase, boxes } = this.props;
+    const { phase, boxes, smashClicks } = this.props;
 
     return (
       <div className={ s.root }>
-        {
-          phase === phases.SMASH &&
-          <div
-            className={ s.crystal }
-            onClick = { this.props.smashCrystal.bind(this) }
-          />
-        }
-        {
-          phase === phases.COLOR &&
-          boxes.map((box, index) =>
+        <div className={ s.game }>
+          {
+            phase === phases.SMASH &&
             <div
-              key = { index }
-              className = {
+              className={
                 classNames({
-                  [s[box.position]]: true,
-                  [s.clicked]: box.clicked,
+                  [s.crystal]: true,
+                  [s[`clicked-${smashClicks}`]]: true,
                 })
               }
-              onClick = { this.props.colorClickBox.bind(this, index) }
+              onClick = { this.props.smashCrystal.bind(this) }
             />
-          )
-        }
-        {
-          this.props.phase === phases.COLOR &&
-          <div className={ s.center } />
-        }
+          }
+          {
+            phase === phases.COLOR &&
+            boxes.map((box, index) =>
+              <div
+                key = { index }
+                className = {
+                  classNames({
+                    [s[box.position]]: true,
+                    [s.clicked]: box.clicked,
+                  })
+                }
+                onClick = { this.props.colorClickBox.bind(this, index) }
+              />
+            )
+          }
+          {
+            this.props.phase === phases.COLOR &&
+            <div className={ s.center } />
+          }
+        </div>
       </div>
     );
   }
@@ -63,6 +71,7 @@ export default connect(
   state => ({
     boxes: state.boxes,
     phase: state.phase,
+    smashClicks: state.smashClicks,
   }),
   {
     colorClickBox,

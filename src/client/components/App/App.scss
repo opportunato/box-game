@@ -3,6 +3,16 @@
 $base-size: 50px;
 
 .root {
+  height: 100%;
+  width: 100%;
+
+  position: relative;
+
+  background-image: url('./bg.png');
+  background-size: cover;
+}
+
+.game {
   position: relative;
 
   height: 3 * $base-size;
@@ -11,15 +21,27 @@ $base-size: 50px;
   left: 50%;
   top: 50%;
 
-  margin-left: -3/2 * $base-size;;
-  margin-top: -3/2 * $base-size;;
+  margin-left: -3/2 * $base-size;
+  margin-top: -3/2 * $base-size;
 }
 
 .crystal {
   height: 100%;
   width: 100%;
 
-  background-color: red;
+  background-image: url("./crystal/rock-state1.png");
+  background-size: 3 * $base-size;
+  background-repeat: no-repeat;
+
+  &.clicked-1 {
+    background-image: url("./crystal/rock-state2.png");
+  }
+  &.clicked-2 {
+    background-image: url("./crystal/rock-state3.png");
+  }
+  &.clicked-3 {
+    background-image: url("./crystal/rock-state4.png");
+  }
 }
 
 .top-left,

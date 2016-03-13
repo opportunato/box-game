@@ -3,7 +3,7 @@ import * as phases from '../constants/Phases';
 
 import { range } from 'lodash';
 
-const MAX_SMASH_CLICKS = 5;
+const MAX_SMASH_CLICKS = 4;
 
 const phasesOrder = [
   phases.SMASH,
@@ -32,7 +32,7 @@ const smashPhase = (state, action) => {
   switch (action.type) {
 
     case types.SMASH_CRYSTAL:
-      if (state.smashClicks >= MAX_SMASH_CLICKS) {
+      if (state.smashClicks >= MAX_SMASH_CLICKS - 1) {
         return {
           ...state,
           phase: phases.COLOR,
