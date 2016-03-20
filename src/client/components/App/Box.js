@@ -145,8 +145,12 @@ class Box extends Component {
             >
               {
                 [phases.CATCH, phases.PLANT].indexOf(phase) > -1 && <div
-                  clicked = { hatches[index].clicked }
-                  className = { s.hatch }
+                  className = {
+                    classNames({
+                      [s.hatch]: true,
+                      [s.clicked]: hatches[index].clicked,
+                    })
+                  }
                   onClick = { this.clickHatch.bind(this, index) }
                 />
               }
