@@ -3,11 +3,12 @@
 $rock-size: 401px;
 $box-size: 306px;
 $button-size: 101px;
-$corner-size: 153px;
+$corner-size: $box-size/2;
 $corner-spot-size: 37px;
 $corner-offset: 60px;
 $center-size: 109px;
 $seed-size: 26px;
+$seed-offset: 30px;
 
 $item-size: 30px;
 
@@ -296,6 +297,15 @@ button {
   }
 }
 
+
+
+$seed-min: 32px;
+$seed-middle: ($box-size - $seed-size)/2;
+$seed-max: $box-size - $seed-min - $seed-size;
+
+$seed-opened-min: -($corner-offset + $seed-size + $seed-offset);
+$seed-opened-max: $box-size + ($corner-offset + $seed-offset);
+
 .seed {
   position: absolute;
 
@@ -307,56 +317,63 @@ button {
 
   transition: all 1s ease-out;
 
+  top: 0;
+  left: 0;
+
   &.clicked {
     display: none;
   }
 
-  &.top,
-  &.bottom {
-    left: 50%;
-    margin-left: -$seed-size/2;
-  }
-
-  &.left,
-  &.right {
-    top: 50%;
-    margin-top: -$seed-size/2;
-  }
-
   &.top {
-    top: 32px;
+    transform: translate3d($seed-middle, $seed-min, 0);
+
+    &.opened {
+      transform: translate3d($seed-middle, $seed-opened-min, 0);
+    }
+
+    &.moving {
+      transform: translate3d($seed-opened-max, $seed-opened-min, 0);
+    }
   }
 
   &.bottom {
-    bottom: 32px;
+    transform: translate3d($seed-middle, $seed-max, 0);
+
+    &.opened {
+      transform: translate3d($seed-middle, $seed-opened-max, 0);
+    }
+
+    &.moving {
+      transform: translate3d($seed-opened-min, $seed-opened-max, 0);
+    }
   }
 
   &.left {
-    left: 32px;
+    transform: translate3d($seed-min, $seed-middle, 0);
+
+    &.opened {
+      transform: translate3d($seed-opened-min, $seed-middle, 0);
+    }
+
+    &.moving {
+      transform: translate3d($seed-opened-min, $seed-opened-min, 0);
+    }
   }
 
   &.right {
-    right: 32px;
+    transform: translate3d($seed-max, $seed-middle, 0);
+
+    &.opened {
+      transform: translate3d($seed-opened-max, $seed-middle, 0);
+    }
+
+    &.moving {
+      transform: translate3d($seed-opened-max, $seed-opened-max, 0);
+    }
   }
 
   &.opened {
     background-color: $seed-color;
-
-    &.top {
-      top: -25px;
-    }
-
-    &.bottom {
-      bottom: -25px;
-    }
-
-    &.left {
-      left: -25px;
-    }
-
-    &.right {
-      right: -25px;
-    }
   }
 }
 

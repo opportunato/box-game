@@ -12,6 +12,15 @@ import s from './App.scss';
 import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
+import { clone } from 'lodash';
+
+const nextPosition = {
+  'top': 'right',
+  'right': 'bottom',
+  'bottom': 'left',
+  'left': 'top',
+};
+
 class Box extends Component {
 
   static propTypes = {
@@ -25,6 +34,46 @@ class Box extends Component {
     seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
   }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      seedMoving: false,
+      seeds: clone(props.seeds),
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.phase === phases.CATCH && this.props.phase === phases.SOUND) {
+      setTimeout(() => {
+        this.setState({ seedMoving: true });
+
+        const moveSeeds = () => {
+          this.timeout = setTimeout(() => {
+            this.setState({
+              seeds: this.state.seeds.map((seed, index) => ({
+                ...seed, position: nextPosition[this.state.seeds[index].position],
+              }))
+            });
+            moveSeeds();
+          }, 1000);
+        };
+        moveSeeds();
+      }, 1000);
+    }
+
+    this.setState({
+      seeds: newProps.seeds.map((seed, index) => ({
+        ...seed, position: this.state.seeds[index].position,
+      }))
+    });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
 
   clickCorner(index) {
     this.props.click({ object: objects.BOX_CORNER, index });
@@ -60,7 +109,6 @@ class Box extends Component {
     const {
       boxCenterClicked,
       corners,
-      seeds,
       hatches,
       phase,
       glow,
@@ -86,7 +134,7 @@ class Box extends Component {
             'top-right',
           ].map((position, index) =>
             <div
-              key = { position }
+              key = { index }
               className = {
                 classNames({
                   [s.corner]: true,
@@ -104,17 +152,18 @@ class Box extends Component {
               }
             </div>
           )
-        }  
+        }
         {
-          seeds.map((seed, index) =>
+          this.state.seeds.map((seed, index) =>
             <div
-              key = { seed.position }
+              key = { index }
               className = {
                 classNames({
                   [s.seed]: true,
                   [s.clicked]: seed.clicked,
                   [s[seed.position]]: true,
                   [s.opened]: [phases.CATCH, phases.PLANT].indexOf(phase) > -1,
+                  [s.moving]: this.state.seedMoving,
                 })
               }
               onClick = { this.clickSeed.bind(this, index) }
