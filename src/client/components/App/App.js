@@ -5,7 +5,6 @@ import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
 import { click, mouseMove } from '../../actions';
-import { Motion, spring } from 'react-motion';
 
 import s from './App.scss';
 
@@ -32,7 +31,6 @@ class App extends Component {
     mouseMove: PropTypes.func.isRequired,
     inventory: PropTypes.object.isRequired,
     lenseCoords: PropTypes.object.isRequired,
-    gliphIndex: PropTypes.number.isRequired,
     jinnSize: PropTypes.number.isRequired,
     dialog: PropTypes.object,
   }
@@ -84,12 +82,7 @@ class App extends Component {
       seeds,
       hatches,
       inventory,
-      corners,
-      boxCenterClicked,
       plantClicked,
-      glowCoords,
-      glowOpacity,
-      gliphIndex,
       lenseCoords,
       jinnSize,
       dialog,
@@ -252,7 +245,6 @@ export default connect(
     gliphIndex: state.gliphIndex,
     jinnSize: state.jinnSize,
     inventory: state.inventory,
-    boxCenterClicked: state.boxCenterClicked,
     plantClicked: state.plantClicked,
     dialog: state.dialog,
     lenseCoords: state.lenseCoords,

@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import { click, mouseMove } from '../../actions';
-import { Motion, spring } from 'react-motion';
 
-import { range } from 'lodash';
-
-import CenterGliph from './CenterGliph';
+// import CenterGliph from './CenterGliph';
 
 import s from './App.scss';
 
@@ -59,7 +56,7 @@ class Box extends Component {
         className = { s.box }
       >
         {
-          corners.map((corner, index) =>
+          phase === phases.BOX && corners.map((corner, index) =>
             <button
               key = { index }
               className = {
