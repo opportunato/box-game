@@ -99,7 +99,7 @@ const gliphCoords = [
 ];
 
 const initialState = {
-  phase: phases.BOX,
+  phase: phases.SMASH,
 
   smashClicks: 0,
 

@@ -28,7 +28,7 @@ export default {
   serverPort: constants.SERVER_PORT,
   serverAddr: constants.SERVER_ADDR,
 
-  assetsPath: '/embed/dictator',
+  assetsPath: '',
 
   taskName: (prefix) => (taskName) => `${prefix}:${taskName}`
 };

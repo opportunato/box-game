@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import classNames from 'classnames';
-
-import { Motion, spring } from 'react-motion';
-
 import { range } from 'lodash';
 
 import s from './App.scss';

@@ -71,7 +71,7 @@ class Rock extends Component {
   render() {
     const { phase, smashClicks, rockCracked } = this.props;
 
-    if (this.state.hide || this.props.phase !== phases.SMASH) return null;
+    if (this.state.hide) return null;
 
     return (
       <Motion style = { this.getRockStyles() }>

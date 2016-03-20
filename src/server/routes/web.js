@@ -10,9 +10,6 @@ import nunjucks from 'nunjucks';
 import 'babel-polyfill';
 
 export default function (config) {
-  if (!config.assetsPath) {
-    throw new Error(`Provide "assetsPath" in config.js`);
-  }
   /* eslint-disable new-cap */
   const router = express.Router();
   /* eslint-enable new-cap */
