@@ -102,7 +102,7 @@ gulp.task(taskName('html'), [taskName('webpack')], prepareHTML({
       }
 
       preparedAssets.forEach(asset => {
-        revved[`/${chunkName}${path.extname(asset)}`] = path.join('/', asset);
+        revved[`${chunkName}${path.extname(asset)}`] = path.join(asset);
       });
     });
 

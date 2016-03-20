@@ -42,7 +42,7 @@ export default {
     chunkFilename: '[id].chunk.[chunkhash].js',
     publicPath: config.dev ?
       `http://${config.clientAddr}:${config.clientPort}/` :
-      `${config.assetsPath}/`
+      `${config.assetsPath}`
   },
 
   module: {
