@@ -5,6 +5,7 @@ $box-size: 306px;
 $button-size: 101px;
 $corner-size: 153px;
 $corner-spot-size: 37px;
+$corner-offset: 60px;
 $center-size: 109px;
 $seed-size: 26px;
 
@@ -15,6 +16,9 @@ $jinn-height: 122px;
 $jinn-width: 186px;
 $lense-size: 103px;
 $center-gliph-size: 93px;
+
+$box-color: #97416F;
+$seed-color: #F5FBA4;
 
 button {
   border: none;
@@ -228,35 +232,53 @@ button {
   background-size: $corner-size;
   background-repeat: no-repeat;
 
+  transition: all 1s ease-out;
+
   .hatch {
     right: 26px;
     bottom: 26px;
   }
 
   &.top-right {
-    right: -60px;
-    top: -60px;
+    right: 0;
+    top: 0;
 
     transform: rotate(270deg);
+
+    &.opened {
+      transform: translate3d($corner-offset, -$corner-offset, 0) rotate(270deg);
+    }
   }
 
   &.top-left {
-    left: -60px;
-    top: -60px;
+    left: 0;
+    top: 0;
 
     transform: rotate(180deg);
+
+    &.opened {
+      transform: translate3d(-$corner-offset, -$corner-offset, 0) rotate(180deg);
+    }
   }
 
   &.bottom-right {
-    right: -60px;
-    bottom: -60px;
+    right: 0;
+    bottom: 0;
+
+    &.opened {
+      transform: translate3d($corner-offset, $corner-offset, 0);
+    }
   }
 
   &.bottom-left {
-    left: -60px;
-    bottom: -60px;
+    left: 0;
+    bottom: 0;
 
     transform: rotate(90deg);
+
+    &.opened {
+      transform: translate3d(-$corner-offset, $corner-offset, 0) rotate(90deg);
+    }
   }
 }
 
@@ -281,7 +303,9 @@ button {
   width: $seed-size;
 
   border: 1px solid black;
-  background-color: #F5FBA4;
+  background-color: $box-color;
+
+  transition: all 1s ease-out;
 
   &.clicked {
     display: none;
@@ -300,19 +324,39 @@ button {
   }
 
   &.top {
-    top: -25px;
+    top: 32px;
   }
 
   &.bottom {
-    bottom: -25px;
+    bottom: 32px;
   }
 
   &.left {
-    left: -25px;
+    left: 32px;
   }
 
   &.right {
-    right: -25px;
+    right: 32px;
+  }
+
+  &.opened {
+    background-color: $seed-color;
+
+    &.top {
+      top: -25px;
+    }
+
+    &.bottom {
+      bottom: -25px;
+    }
+
+    &.left {
+      left: -25px;
+    }
+
+    &.right {
+      right: -25px;
+    }
   }
 }
 

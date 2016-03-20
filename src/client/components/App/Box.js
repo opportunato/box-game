@@ -79,6 +79,49 @@ class Box extends Component {
         }
       >
         {
+          [
+            'top-left',
+            'bottom-right',
+            'bottom-left',
+            'top-right',
+          ].map((position, index) =>
+            <div
+              key = { position }
+              className = {
+                classNames({
+                  [s.corner]: true,
+                  [s[position]]: true,
+                  [s.opened]: [phases.CATCH, phases.PLANT].indexOf(phase) > -1,
+                })
+              }
+            >
+              {
+                [phases.CATCH, phases.PLANT].indexOf(phase) > -1 && <div
+                  clicked = { hatches[index].clicked }
+                  className = { s.hatch }
+                  onClick = { this.clickHatch.bind(this, index) }
+                />
+              }
+            </div>
+          )
+        }  
+        {
+          seeds.map((seed, index) =>
+            <div
+              key = { seed.position }
+              className = {
+                classNames({
+                  [s.seed]: true,
+                  [s.clicked]: seed.clicked,
+                  [s[seed.position]]: true,
+                  [s.opened]: [phases.CATCH, phases.PLANT].indexOf(phase) > -1,
+                })
+              }
+              onClick = { this.clickSeed.bind(this, index) }
+            />
+          )
+        }
+        {
           phase === phases.BOX && corners.map((corner, index) =>
             <button
               key = { index }
@@ -117,45 +160,6 @@ class Box extends Component {
             className = { s.gliph }
             onMouseMove = { this.mouseMove.bind(this) }
           />
-        }
-        {
-          [phases.CATCH, phases.PLANT].indexOf(phase) > -1 && [
-            'top-left',
-            'bottom-right',
-            'bottom-left',
-            'top-right',
-          ].map((position, index) =>
-            <div
-              key = { position }
-              className = {
-                classNames({
-                  [s.corner]: true,
-                  [s[position]]: true,
-                })
-              }
-            >
-              <div
-                clicked = { hatches[index].clicked }
-                className = { s.hatch }
-                onClick = { this.clickHatch.bind(this, index) }
-              />
-            </div>
-          )
-        }
-        {
-          phase === phases.CATCH && seeds.map((seed, index) =>
-            <div
-              key = { seed.position }
-              className = {
-                classNames({
-                  [s.seed]: true,
-                  [s.clicked]: seed.clicked,
-                  [s[seed.position]]: true,
-                })
-              }
-              onClick = { this.clickSeed.bind(this, index) }
-            />
-          )
         }
       </div>
     );
