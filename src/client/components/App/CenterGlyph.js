@@ -7,7 +7,7 @@ import s from './App.scss';
 
 import * as phases from '../../constants/Phases';
 
-class CenterGliph extends Component {
+class CenterGlyph extends Component {
 
   static propTypes = {
     phase: PropTypes.string.isRequired,
@@ -21,13 +21,13 @@ class CenterGliph extends Component {
     if (phase !== phases.BOX) return null;
 
     return (
-      <div className = { s['center-gliph'] }>
+      <div className = { s['center-glyph'] }>
         {
           range(0, cornersClicked).map(index =>
             <div
               key = { index }
               style = {{
-                backgroundImage: `url(${require(`./center-gliph/${index}.png`)})`,
+                backgroundImage: `url(${require(`./center-glyph/${index}.png`)})`,
               }}
             />
           )
@@ -43,4 +43,4 @@ export default connect(
     phase: state.phase,
     corners: state.corners,
   }),
-)(CenterGliph);
+)(CenterGlyph);

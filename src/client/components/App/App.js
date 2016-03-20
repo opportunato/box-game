@@ -100,7 +100,7 @@ class App extends Component {
               <div
                 key = { `gliph-${index}` }
                 style = {{
-                  backgroundImage: `url(${require(`./inventory/gliph-0${+index + 1}.png`)})`
+                  backgroundImage: `url(${require(`./inventory/glyph-0${+index + 1}.png`)})`
                 }}
                 onClick = { this.click.bind(this, { object: objects.GLIPH, index }) }
               /> : null

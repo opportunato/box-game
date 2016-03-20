@@ -16,7 +16,7 @@ $flower-size: 226px;
 $jinn-height: 122px;
 $jinn-width: 186px;
 $lense-size: 103px;
-$center-gliph-size: 93px;
+$center-glyph-size: 93px;
 
 $box-color: #97416F;
 $seed-color: #F5FBA4;
@@ -116,24 +116,24 @@ button {
   background-size: $box-size;
 }
 
-.center-gliph {
+.center-glyph {
   position: absolute;
 
-  height: $center-gliph-size;
-  width: $center-gliph-size;
+  height: $center-glyph-size;
+  width: $center-glyph-size;
 
   left: 50%;
   top: 50%;
 
-  margin-left: -$center-gliph-size/2;
-  margin-top: -$center-gliph-size/2;
+  margin-left: -$center-glyph-size/2;
+  margin-top: -$center-glyph-size/2;
 
   > div {
     height: 100%;
     width: 100%;
 
     background-repeat: no-repeat;
-    background-size: $center-gliph-size;
+    background-size: $center-glyph-size;
 
     position: absolute;
     left: 0;
@@ -378,6 +378,10 @@ $seed-opened-max: $box-size + ($corner-offset + $seed-offset);
 
   &.opened {
     background-color: $seed-color;
+  }
+
+  &.moving {
+    transition: all 2s ease-out;
   }
 }
 

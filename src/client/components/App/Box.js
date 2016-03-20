@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { click, mouseMove } from '../../actions';
 
-// import CenterGliph from './CenterGliph';
+import CenterGlyph from './CenterGlyph';
 
 import s from './App.scss';
 
@@ -57,7 +57,7 @@ class Box extends Component {
               }))
             });
             moveSeeds();
-          }, 1000);
+          }, 2000);
         };
         moveSeeds();
       }, 1000);
@@ -170,7 +170,7 @@ class Box extends Component {
                   [s.moving]: this.state.seedMoving,
                 })
               }
-              onClick = { this.clickSeed.bind(this, index) }
+              onMouseDown = { this.clickSeed.bind(this, index) }
             />
           )
         }
@@ -190,6 +190,7 @@ class Box extends Component {
             />
           )
         }
+        <CenterGlyph />
         <button
           className = { s.center }
           onClick = { this.clickCenter.bind(this) }
