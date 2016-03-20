@@ -4,13 +4,13 @@ $rock-size: 401px;
 $box-size: 306px;
 $button-size: 101px;
 $corner-size: 153px;
-$corner-spot-size: 36px;
+$corner-spot-size: 37px;
 $center-size: 109px;
 $seed-size: 26px;
 
 $item-size: 30px;
 
-$flower-size: 227px;
+$flower-size: 226px;
 $jinn-height: 122px;
 $jinn-width: 186px;
 $lense-size: 103px;
@@ -176,23 +176,23 @@ button {
   background-size: $corner-spot-size;
 
   &.top-right {
-    right: 27px;
-    top: 27px;
+    right: 26px;
+    top: 26px;
   }
 
   &.top-left {
-    left: 27px;
-    top: 27px;
+    left: 26px;
+    top: 26px;
   }
 
   &.bottom-right {
-    right: 27px;
-    bottom: 27px;
+    right: 26px;
+    bottom: 26px;
   }
 
   &.bottom-left {
-    left: 27px;
-    bottom: 27px;
+    left: 26px;
+    bottom: 26px;
   }
 
   &.clickable {
@@ -200,7 +200,23 @@ button {
   }
 
   &.clicked {
-    background-image: url("./box/corner-spot-active.png");
+
+    &:after {
+      content: '';
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -55px;
+      margin-left: -55px;
+
+      display: block;
+      width: 110px;
+      height: 110px;
+
+      background-image: url("./box/corner-spot-active.png");
+      background-size: cover;
+    }
   }
 }
 
@@ -219,8 +235,8 @@ button {
     background-image: url("./box/corner-top-right.png");
 
     .hatch {
-      right: 27px;
-      top: 27px;
+      right: 26px;
+      top: 26px;
     }
   }
 
@@ -231,8 +247,8 @@ button {
     background-image: url("./box/corner-top-left.png");
 
     .hatch {
-      left: 27px;
-      top: 27px;
+      left: 26px;
+      top: 26px;
     }
   }
 
@@ -243,8 +259,8 @@ button {
     background-image: url("./box/corner-bottom-right.png");
 
     .hatch {
-      right: 27px;
-      bottom: 27px;
+      right: 26px;
+      bottom: 26px;
     }
   }
 

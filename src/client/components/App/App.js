@@ -27,7 +27,6 @@ class App extends Component {
     corners: PropTypes.array.isRequired,
     hatches: PropTypes.array.isRequired,
     seeds: PropTypes.array.isRequired,
-    boxCenterClicked: PropTypes.bool.isRequired,
     plantClicked: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
