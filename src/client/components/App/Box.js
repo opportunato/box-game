@@ -21,11 +21,21 @@ class Box extends Component {
     gliphIndex: PropTypes.number.isRequired,
     glow: PropTypes.object.isRequired,
     corners: PropTypes.array.isRequired,
+    hatches: PropTypes.array.isRequired,
+    seeds: PropTypes.array.isRequired,
     boxCenterClicked: PropTypes.bool.isRequired,
   }
 
   clickCorner(index) {
     this.props.click({ object: objects.BOX_CORNER, index });
+  }
+
+  clickSeed(index) {
+    this.props.click({ object: objects.SEED, index });
+  }
+
+  clickHatch(index) {
+    this.props.click({ object: objects.HATCH, index });
   }
 
   clickCenter() {
@@ -47,13 +57,26 @@ class Box extends Component {
 
 
   render() {
-    const { boxCenterClicked, corners, phase, glow, gliphIndex } = this.props;
+    const {
+      boxCenterClicked,
+      corners,
+      seeds,
+      hatches,
+      phase,
+      glow,
+      gliphIndex
+    } = this.props;
 
-    if ([phases.BOX, phases.SOUND].indexOf(phase) === -1) return null;
+    if ([phases.BOX, phases.SOUND, phases.CATCH, phases.PLANT].indexOf(phase) === -1) return null;
 
     return (
       <div
-        className = { s.box }
+        className = {
+          classNames({
+            [s.box]: true,
+            [s.compact]: [phases.CATCH, phases.PLANT].indexOf(phase) === -1,
+          })
+        }
       >
         {
           phase === phases.BOX && corners.map((corner, index) =>
@@ -95,6 +118,45 @@ class Box extends Component {
             onMouseMove = { this.mouseMove.bind(this) }
           />
         }
+        {
+          [phases.CATCH, phases.PLANT].indexOf(phase) > -1 && [
+            'top-left',
+            'bottom-right',
+            'bottom-left',
+            'top-right',
+          ].map((position, index) =>
+            <div
+              key = { position }
+              className = {
+                classNames({
+                  [s.corner]: true,
+                  [s[position]]: true,
+                })
+              }
+            >
+              <div
+                clicked = { hatches[index].clicked }
+                className = { s.hatch }
+                onClick = { this.clickHatch.bind(this, index) }
+              />
+            </div>
+          )
+        }
+        {
+          phase === phases.CATCH && seeds.map((seed, index) =>
+            <div
+              key = { seed.position }
+              className = {
+                classNames({
+                  [s.seed]: true,
+                  [s.clicked]: seed.clicked,
+                  [s[seed.position]]: true,
+                })
+              }
+              onClick = { this.clickSeed.bind(this, index) }
+            />
+          )
+        }
       </div>
     );
   }
@@ -105,6 +167,8 @@ export default connect(
   state => ({
     phase: state.phase,
     corners: state.corners,
+    hatches: state.hatches,
+    seeds: state.seeds,
     glow: state.glow,
     gliphIndex: state.gliphIndex,
     boxCenterClicked: state.boxCenterClicked,

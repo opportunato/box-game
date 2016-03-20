@@ -37,7 +37,6 @@ button {
 
 .rock,
 .box,
-.box-placeholder,
 .glow,
 .gliph {
   position: absolute;
@@ -80,7 +79,6 @@ button {
   background-size: $rock-size;
 }
 
-.box-placeholder,
 .box,
 .gliph,
 .glow {
@@ -91,7 +89,7 @@ button {
   margin-top: - $box-size/2;
 }
 
-.box {
+.box.compact {
   background-image: url("./box/base.png");
   background-repeat: no-repeat;
   background-size: $box-size;
@@ -225,55 +223,40 @@ button {
 
   height: $corner-size;
   width: $corner-size;
+
+  background-image: url("./box/corner.png");
   background-size: $corner-size;
   background-repeat: no-repeat;
+
+  .hatch {
+    right: 26px;
+    bottom: 26px;
+  }
 
   &.top-right {
     right: -60px;
     top: -60px;
 
-    background-image: url("./box/corner-top-right.png");
-
-    .hatch {
-      right: 26px;
-      top: 26px;
-    }
+    transform: rotate(270deg);
   }
 
   &.top-left {
     left: -60px;
     top: -60px;
 
-    background-image: url("./box/corner-top-left.png");
-
-    .hatch {
-      left: 26px;
-      top: 26px;
-    }
+    transform: rotate(180deg);
   }
 
   &.bottom-right {
     right: -60px;
     bottom: -60px;
-
-    background-image: url("./box/corner-bottom-right.png");
-
-    .hatch {
-      right: 26px;
-      bottom: 26px;
-    }
   }
 
   &.bottom-left {
     left: -60px;
     bottom: -60px;
 
-    background-image: url("./box/corner-bottom-left.png");
-
-    .hatch {
-      left: 36px;
-      bottom: 36px;
-    }
+    transform: rotate(90deg);
   }
 }
 

@@ -79,8 +79,6 @@ class App extends Component {
   render() {
     const {
       phase,
-      seeds,
-      hatches,
       inventory,
       plantClicked,
       lenseCoords,
@@ -95,50 +93,6 @@ class App extends Component {
         onClick={this.clickDialog.bind(this)}
       >
         <Box />
-        {
-          [phases.CATCH, phases.PLANT].indexOf(phase) > -1 &&
-          <div className = { s['box-placeholder'] }>
-            {
-              [
-                'top-left',
-                'bottom-right',
-                'bottom-left',
-                'top-right',
-              ].map((position, index) =>
-                <div
-                  key = { position }
-                  className = {
-                    classNames({
-                      [s.corner]: true,
-                      [s[position]]: true,
-                    })
-                  }
-                >
-                  <div
-                    clicked = { hatches[index].clicked }
-                    className = { s.hatch }
-                    onClick = { this.props.click.bind(this, { object: objects.HATCH, index }) }
-                  />
-                </div>
-              )
-            }
-            {
-              seeds.map((seed, index) =>
-                <div
-                  key = { seed.position }
-                  className = {
-                    classNames({
-                      [s.seed]: true,
-                      [s.clicked]: seed.clicked,
-                      [s[seed.position]]: true,
-                    })
-                  }
-                  onClick = { this.click.bind(this, { object: objects.SEED, index }) }
-                />
-              )
-            }
-          </div>
-        }
         <div className = { s.inventory }>
           {
             map(inventory.gliphs, (item, index) =>
