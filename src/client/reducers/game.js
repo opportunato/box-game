@@ -99,7 +99,7 @@ const gliphCoords = [
 ];
 
 const initialState = {
-  phase: phases.SMASH,
+  phase: phases.BOX,
 
   smashClicks: 0,
 
@@ -107,12 +107,13 @@ const initialState = {
 
   rockCracked: false,
 
-  glowCoords: {
-    x: null,
-    y: null
+  glow: {
+    coords: {
+      x: null,
+      y: null,
+    },
+    opacity: 0,
   },
-
-  glowOpacity: 0,
 
   gliphIndex: 0,
 
@@ -229,7 +230,8 @@ const boxPhase = (state, action) => {
 };
 
 const gliphDistance = (state) => {
-  const { glowCoords, gliphIndex } = state;
+  const { glow, gliphIndex } = state;
+  const glowCoords = glow.coords;
 
   return Math.sqrt(
     Math.pow(glowCoords.x - gliphCoords[gliphIndex].x, 2) +
@@ -266,8 +268,10 @@ const soundPhase = (state, action) => {
         case objects.GLIPH:
           return reachedGliph({
             ...state,
-            glowCoords: clone(coords),
-            glowOpacity: getGlowOpacity(state),
+            glow: {
+              coords: clone(coords),
+              opacity: getGlowOpacity(state),
+            },
           });
 
         default:

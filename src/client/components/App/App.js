@@ -10,7 +10,7 @@ import { Motion, spring } from 'react-motion';
 import s from './App.scss';
 
 import Rock from './Rock';
-import CenterGliph from './CenterGliph';
+import Box from './Box';
 
 require('../base.css');
 
@@ -32,9 +32,7 @@ class App extends Component {
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
     inventory: PropTypes.object.isRequired,
-    glowCoords: PropTypes.object.isRequired,
     lenseCoords: PropTypes.object.isRequired,
-    glowOpacity: PropTypes.number.isRequired,
     gliphIndex: PropTypes.number.isRequired,
     jinnSize: PropTypes.number.isRequired,
     dialog: PropTypes.object,
@@ -104,54 +102,7 @@ class App extends Component {
         onMouseMove={ this.lenseMove.bind(this) }
         onClick={this.clickDialog.bind(this)}
       >
-        {
-          [phases.BOX, phases.SOUND].indexOf(phase) > -1 &&
-          <div
-            className = { s.box }
-          >
-            {
-              corners.map((corner, index) =>
-                <button
-                  key = { index }
-                  className = {
-                    classNames({
-                      [s['corner-spot']]: true,
-                      [s[corner.position]]: true,
-                      [s.clicked]: corner.clicked,
-                      [s.clickable]: boxCenterClicked,
-                    })
-                  }
-                  onClick = { this.click.bind(this, { object: objects.BOX_CORNER, index }) }
-                />
-              )
-            }
-            <button
-              className = { s.center }
-              onClick = { this.click.bind(this, { object: objects.BOX_CENTER }) }
-            />
-            <CenterGliph />
-            {
-              phase === phases.SOUND &&
-              <div
-                className = { s.glow }
-                style = {{
-                  left: glowCoords.x,
-                  top: glowCoords.y,
-                  opacity: glowOpacity,
-                  backgroundImage: `url(${require(`./box/glow-0${gliphIndex + 1}.png`)})`
-                }}
-              />
-            }
-            {
-              phase === phases.SOUND &&
-              <div
-                ref = "gliph"
-                className = { s.gliph }
-                onMouseMove = { this.mouseMove.bind(this) }
-              />
-            }
-          </div>
-        }
+        <Box />
         {
           [phases.CATCH, phases.PLANT].indexOf(phase) > -1 &&
           <div className = { s['box-placeholder'] }>
@@ -299,8 +250,6 @@ export default connect(
     seeds: state.seeds,
     hatches: state.hatches,
     phase: state.phase,
-    glowCoords: state.glowCoords,
-    glowOpacity: state.glowOpacity,
     gliphIndex: state.gliphIndex,
     jinnSize: state.jinnSize,
     inventory: state.inventory,
