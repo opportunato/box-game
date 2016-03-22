@@ -146,7 +146,7 @@ const initialState = {
   })),
 
   inventory: {
-    gliphs: {
+    glyphs: {
       0: false,
       1: false,
       2: false,
@@ -191,7 +191,7 @@ const allCornersClicked = (state) => {
   return {
     ...state,
     inventory: allClicked ?
-      { ...state.inventory, gliphs: { ...state.inventory.gliphs, 0: true } } : state.inventory,
+      { ...state.inventory, glyphs: { ...state.inventory.glyphs, 0: true } } : state.inventory,
     phase: allClicked ? phases.SOUND : state.phase,
   };
 };
@@ -249,7 +249,7 @@ const reachedGliph = (state) => {
   return {
     ...state,
     inventory: isGliphReached ?
-      { ...state.inventory, gliphs: { ...state.inventory.gliphs, [gliphIndex + 1]: true } } : state.inventory,
+      { ...state.inventory, glyphs: { ...state.inventory.glyphs, [gliphIndex + 1]: true } } : state.inventory,
     phase: collectedAllGliphs ? phases.CATCH : state.phase,
     gliphIndex: isGliphReached ? state.gliphIndex + 1 : state.gliphIndex,
   };
@@ -399,7 +399,7 @@ const jinnPhase = (state, action) => {
           return jinnGrown({
             ...state,
             jinnSize: state.jinnSize + 1,
-            inventory: { ...state.inventory, gliphs: { ...state.inventory.gliphs, [index]: false } }
+            inventory: { ...state.inventory, glyphs: { ...state.inventory.glyphs, [index]: false } }
           });
 
         default:

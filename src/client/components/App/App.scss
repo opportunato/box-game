@@ -456,10 +456,24 @@ $seed-opened-max: $box-size + ($corner-offset + $seed-offset);
   width: $box-size;
 
   display: flex;
+  justify-content: space-between;
 
   > * {
     height: $item-size;
     width: $item-size;
+
+    opacity: 0;
+
+    transition: all 1s ease-out;
+
+    transform: scale(10);
+    transform-origin: center bottom;
+
+    &.visible {
+      transform: scale(1);
+
+      opacity: 1;
+    }
   }
 }
 

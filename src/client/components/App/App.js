@@ -92,22 +92,24 @@ class App extends Component {
         onMouseMove={ this.lenseMove.bind(this) }
         onClick={this.clickDialog.bind(this)}
       >
-        <Box />
         <div className = { s.inventory }>
           {
-            map(inventory.gliphs, (item, index) =>
-              item ?
+            map(inventory.glyphs, (item, index) =>
               <div
-                key = { `gliph-${index}` }
+                key = { `glyph-${index}` }
+                className = {
+                  classNames({
+                    [s.visible]: item,
+                  })
+                }
                 style = {{
                   backgroundImage: `url(${require(`./inventory/glyph-0${+index + 1}.png`)})`
                 }}
                 onClick = { this.click.bind(this, { object: objects.GLIPH, index }) }
-              /> : null
+              />
             )
           }
           {
-            inventory.seedsNumber > 0 &&
             <div
               style = {{
                 backgroundImage: `url(${require(`./inventory/seed.png`)})`
@@ -115,6 +117,7 @@ class App extends Component {
             />
           }
         </div>
+        <Box />
         {
           phase === phases.GROWTH && !plantClicked &&
           <div
