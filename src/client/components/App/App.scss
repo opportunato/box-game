@@ -140,8 +140,7 @@ button {
     transition: all 1s ease-out;
 
     &.step-0 {
-      height: 0;
-      width: 100%;
+      opacity: 0;
     }
 
     &.step-1 {
@@ -172,11 +171,11 @@ button {
     }
 
     &.step-4 {
-      height: 0;
-      width: 0;
+      opacity: 0;
     }
 
     &.visible {
+      opacity: 1;
       height: 100%;
       width: 100%;
     }
@@ -240,28 +239,48 @@ button {
     bottom: 26px;
   }
 
-  &.clickable {
+  &:before {
+    content: '';
+
+    position: absolute;
+
+    top: 0; right: 0; left: 0; bottom: 0;
+
     background-image: url("./box/corner-spot-dormant.png");
+    background-size: cover;
+
+    opacity: 0;
+
+    transition: all 1s ease-out;
   }
 
-  &.clicked {
+  &.clickable:before {
+    opacity: 1;
+  }
 
-    &:after {
-      content: '';
+  &:after {
+    content: '';
 
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -55px;
-      margin-left: -55px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -55px;
+    margin-left: -55px;
 
-      display: block;
-      width: 110px;
-      height: 110px;
+    display: block;
+    width: 110px;
+    height: 110px;
 
-      background-image: url("./box/corner-spot-active.png");
-      background-size: cover;
-    }
+    background-image: url("./box/corner-spot-active.png");
+    background-size: cover;
+
+    opacity: 0;
+
+    transition: all 1s ease-out;
+  }
+
+  &.clicked:after {
+    opacity: 1;
   }
 }
 
