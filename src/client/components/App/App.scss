@@ -129,15 +129,57 @@ button {
   margin-top: -$center-glyph-size/2;
 
   > div {
-    height: 100%;
-    width: 100%;
-
-    background-repeat: no-repeat;
-    background-size: $center-glyph-size;
-
     position: absolute;
     left: 0;
     top: 0;
+
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: $center-glyph-size;
+
+    transition: all 1s ease-out;
+
+    &.step-0 {
+      height: 0;
+      width: 100%;
+    }
+
+    &.step-1 {
+      height: 0;
+      width: 100%;
+    }
+
+    &.step-2 {
+      height: 100%;
+      width: 0;
+
+      left: auto;
+      top: auto;
+      right: 0;
+      bottom: 0;
+
+      background-position: right bottom;
+    }
+
+    &.step-3 {
+      height: 0;
+      width: 100%;
+
+      top: auto;
+      bottom: 0;
+
+      background-position: left bottom;
+    }
+
+    &.step-4 {
+      height: 0;
+      width: 0;
+    }
+
+    &.visible {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 
