@@ -492,7 +492,8 @@ $seed-opened-max: $box-size + ($corner-offset + $seed-offset);
   background-repeat: no-repeat;
 }
 
-.jinn {
+.jinn,
+.jinn-disappear {
   height: $jinn-height;
   width: $jinn-width;
 
@@ -502,6 +503,12 @@ $seed-opened-max: $box-size + ($corner-offset + $seed-offset);
   top: -$jinn-height;
   left: 50%;
   margin-left: -$jinn-width/2;
+}
+
+.jinn-disappear {
+  height: $jinn-width;
+  top: -$jinn-width;
+  background-image: url("./jinn/disappear.png");
 }
 
 .dialog-speech {

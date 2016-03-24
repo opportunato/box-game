@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
-import { click, mouseMove } from '../../actions';
+import { next, click, mouseMove } from '../../actions';
 
 import s from './App.scss';
 
 import Rock from './Rock';
 import Box from './Box';
+import SpriteAnimation from './SpriteAnimation';
 
 require('../base.css');
 
@@ -27,8 +28,10 @@ class App extends Component {
     hatches: PropTypes.array.isRequired,
     seeds: PropTypes.array.isRequired,
     plantClicked: PropTypes.bool.isRequired,
+    showLense: PropTypes.bool.isRequired,
     click: PropTypes.func.isRequired,
     mouseMove: PropTypes.func.isRequired,
+    next: PropTypes.func.isRequired,
     inventory: PropTypes.object.isRequired,
     lenseCoords: PropTypes.object.isRequired,
     jinnSize: PropTypes.number.isRequired,
@@ -84,6 +87,7 @@ class App extends Component {
       lenseCoords,
       jinnSize,
       dialog,
+      showLense,
     } = this.props;
 
     return (
@@ -127,7 +131,6 @@ class App extends Component {
         }
         {
           [phases.SMASH, phases.BOX, phases.SOUND].indexOf(phase) === -1 &&
-          dialog &&
           <div
             className = { s.center + ' ' + s.separate }
           >
@@ -146,6 +149,15 @@ class App extends Component {
                   backgroundImage: `url(${require(`./jinn/jinn-0${clamp(jinnSize, 4)}.png`)})`
                 }}
                 className = { s.jinn }
+              />
+            }
+            {
+              phase === phases.DIALOG && !dialog &&
+              <SpriteAnimation
+                className = { s['jinn-disappear'] }
+                steps = { 11 }
+                spriteSize = { 186 }
+                onEnd = { this.props.next.bind(this) }
               />
             }
           </div>
@@ -172,7 +184,7 @@ class App extends Component {
           </div>
         }
         {
-          ((phase === phases.DIALOG && !dialog) ||
+          ((phase === phases.DIALOG && showLense) ||
             phase === phases.LENSE) &&
           <div
             className = {classNames({
@@ -205,9 +217,11 @@ export default connect(
     plantClicked: state.plantClicked,
     dialog: state.dialog,
     lenseCoords: state.lenseCoords,
+    showLense: state.showLense,
   }),
   {
     click,
-    mouseMove
+    mouseMove,
+    next,
   }
 )(App);

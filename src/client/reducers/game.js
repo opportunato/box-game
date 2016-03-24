@@ -99,7 +99,7 @@ const gliphCoords = [
 ];
 
 const initialState = {
-  phase: phases.BOX,
+  phase: phases.DIALOG,
 
   smashClicks: 0,
 
@@ -118,17 +118,16 @@ const initialState = {
   gliphIndex: 0,
 
   plantClicked: false,
-  jinnSize: 1,
+  jinnSize: 4,
 
-  dialog: {
-    ...dialogs[0],
-    index: 0
-  },
+  dialog: null,
 
   lenseCoords: {
     x: null,
     y: null,
   },
+
+  showLense: false,
 
   corners: range(0, 4).map(number => ({
     clicked: false,
@@ -464,6 +463,12 @@ const dialogPhase = (state, action) => {
           return state;
       }
       break;
+
+    case types.NEXT:
+      return {
+        ...state,
+        showLense: true,
+      };
 
     default:
       return state;
