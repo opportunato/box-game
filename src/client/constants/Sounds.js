@@ -1,0 +1,13 @@
+export const ROCK_CLICK = 'ROCK_CLICK';
+export const ROCK_CRASH = 'ROCK_CRASH';
+export const BOX_CENTER_CLICK = 'BOX_CENTER_CLICK';
+export const BOX_CORNER_CLICK = 'BOX_CORNER_CLICK';
+export const LETTER_APPEAR = 'LETTER_APPEAR';
+export const GLIPH_APPEAR = 'GLIPH_APPEAR';
+export const FIRST_GLIPH_SEARCH = 'FIRST_GLIPH_SEARCH';
+export const SECOND_GLIPH_SEARCH = 'SECOND_GLIPH_SEARCH';
+export const THIRD_GLIPH_SEARCH = 'THIRD_GLIPH_SEARCH';
+export const BOX_OPEN = 'BOX_OPEN';
+export const SEEDS_FLY = 'SEEDS_FLY';
+export const SEED_CATCH = 'SEED_CATCH';
+export const SEED_PLANT = 'SEED_PLANT';

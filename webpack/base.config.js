@@ -44,7 +44,11 @@ const baseConfig = {
       {
         test: /\.json$/,
         loaders: ['json-loader']
-      }
+      },
+      {
+        test: /\.(mp3)$/,
+        loaders: ['file-loader']
+      },
     ]
   },
 

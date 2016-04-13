@@ -8,6 +8,8 @@ import { Motion, spring } from 'react-motion';
 
 import { range } from 'lodash';
 
+import { playRockClick, playRockCrash } from './SoundPlayer';
+
 import s from './App.scss';
 
 import * as phases from '../../constants/Phases';
@@ -30,6 +32,7 @@ class Rock extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.phase !== phases.SMASH && this.props.phase === phases.SMASH) {
+      playRockCrash();
       setTimeout(() => {
         this.setState({ hide: true });
       }, 1000);
@@ -61,6 +64,8 @@ class Rock extends Component {
 
   click() {
     if (this.props.phase !== phases.SMASH) return;
+
+    playRockClick();
     this.setState({ x: 50 });
     setTimeout(() => {
       this.setState({ x: 0 });
@@ -71,7 +76,7 @@ class Rock extends Component {
   render() {
     const { phase, smashClicks, rockCracked } = this.props;
 
-    if (this.state.hide || this.props.phase !== phases.SMASH) return null;
+    if (this.state.hide) return null;
 
     return (
       <Motion style = { this.getRockStyles() }>

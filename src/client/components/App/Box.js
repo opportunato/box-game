@@ -9,6 +9,13 @@ import CenterGlyph from './CenterGlyph';
 
 import s from './App.scss';
 
+import {
+  playBoxCenterClick,
+  playBoxCornerClick,
+  playSeedCatch,
+  playSeedPlant,
+} from './SoundPlayer';
+
 import * as phases from '../../constants/Phases';
 import * as objects from '../../constants/Objects';
 
@@ -76,18 +83,22 @@ class Box extends Component {
 
 
   clickCorner(index) {
+    playBoxCornerClick();
     this.props.click({ object: objects.BOX_CORNER, index });
   }
 
   clickSeed(index) {
+    playSeedCatch();
     this.props.click({ object: objects.SEED, index });
   }
 
   clickHatch(index) {
+    playSeedPlant();
     this.props.click({ object: objects.HATCH, index });
   }
 
   clickCenter() {
+    playBoxCenterClick();
     this.props.click({ object: objects.BOX_CENTER });
   }
 
