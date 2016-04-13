@@ -14,6 +14,14 @@ import {
   playBoxCornerClick,
   playSeedCatch,
   playSeedPlant,
+  playLetterAppear,
+  playBoxOpen,
+  playFirstGliphSearch,
+  playSecondGliphSearch,
+  playThirdGliphSearch,
+  playGliphAppear,
+  playSeedsFly,
+  stopMusic,
 } from './SoundPlayer';
 
 import * as phases from '../../constants/Phases';
@@ -52,8 +60,16 @@ class Box extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    if (newProps.phase !== this.props.phase) {
+      stopMusic();
+    }
+
     if (newProps.phase === phases.CATCH && this.props.phase === phases.SOUND) {
+      playGliphAppear();
+      playBoxOpen();
+
       setTimeout(() => {
+        playSeedsFly();
         this.setState({ seedMoving: true });
 
         const moveSeeds = () => {
@@ -68,6 +84,22 @@ class Box extends Component {
         };
         moveSeeds();
       }, 1000);
+    }
+
+    if (this.props.phase === phases.SOUND && newProps.gliphIndex !== this.props.gliphIndex) {
+      playGliphAppear();
+
+      if (newProps.gliphIndex === 1) {
+        playSecondGliphSearch();
+      }
+      if (newProps.gliphIndex === 2) {
+        playThirdGliphSearch();
+      }
+    }
+
+    if (newProps.phase === phases.SOUND && this.props.phase === phases.BOX) {
+      playLetterAppear();
+      playFirstGliphSearch();
     }
 
     this.setState({

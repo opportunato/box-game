@@ -4,17 +4,6 @@ import * as objects from '../constants/Objects';
 
 import { clone, range } from 'lodash';
 
-import {
-  playLetterAppear,
-  playBoxOpen,
-  playFirstGliphSearch,
-  playSecondGliphSearch,
-  playThirdGliphSearch,
-  playGliphAppear,
-  playSeedsFly,
-  stopMusic,
-} from '../components/App/SoundPlayer';
-
 const MAX_SMASH_CLICKS = 4;
 
 const cornerPositions = [
@@ -198,11 +187,6 @@ const smashPhase = (state, action) => {
 const allCornersClicked = (state) => {
   const allClicked = state.corners.every(corner => corner.clicked);
 
-  if (allClicked) {
-    playLetterAppear();
-    playFirstGliphSearch();
-  }
-
   return {
     ...state,
     inventory: allClicked ?
@@ -261,21 +245,6 @@ const reachedGliph = (state) => {
   const collectedAllGliphs = isGliphReached &&
     gliphIndex === gliphCoords.length - 1;
 
-  if (isGliphReached) {
-    playGliphAppear();
-    if (gliphIndex === 0) {
-      playSecondGliphSearch();
-    }
-    if (gliphIndex === 1) {
-      playThirdGliphSearch();
-    }
-  }
-
-  if (collectedAllGliphs) {
-    playBoxOpen();
-    playSeedsFly();
-  }
-
   return {
     ...state,
     inventory: isGliphReached ?
@@ -316,10 +285,6 @@ const soundPhase = (state, action) => {
 
 const allSeedsCaught = (state) => {
   const allCaught = state.seeds.every(seed => seed.clicked);
-
-  if (allCaught) {
-    stopMusic();
-  }
 
   return {
     ...state,
