@@ -2,9 +2,6 @@ import { Howl } from 'howler';
 
 import * as Sounds from '../../constants/Sounds';
 
-import { isObject } from 'lodash';
-
-
 const SOUNDS = {
   [Sounds.ROCK_CLICK]: '10.icebreak',
   [Sounds.ROCK_CRASH]: '11.box',
@@ -23,7 +20,7 @@ const SOUNDS = {
 
 let playedMusic = [];
 
-const play = (sound, loop=false) => {
+const play = (sound, loop = false) => {
   const howl = new Howl({
     urls: [require(`./sounds/${SOUNDS[sound]}.mp3`)],
     loop,
@@ -39,7 +36,7 @@ const play = (sound, loop=false) => {
 const stopAll = () => {
   playedMusic.forEach(music => music.stop());
   playedMusic = [];
-}
+};
 
 const playSound = (sound) => {
   play(sound);
@@ -75,15 +72,15 @@ export default {
     playSound(Sounds.LETTER_APPEAR);
   },
 
-  playFirstGliphSearch(index) {
+  playFirstGliphSearch() {
     playMusic(Sounds.FIRST_GLIPH_SEARCH);
   },
 
-  playSecondGliphSearch(index) {
+  playSecondGliphSearch() {
     playMusic(Sounds.SECOND_GLIPH_SEARCH);
   },
 
-  playThirdGliphSearch(index) {
+  playThirdGliphSearch() {
     playMusic(Sounds.THIRD_GLIPH_SEARCH);
   },
 
