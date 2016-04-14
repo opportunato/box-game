@@ -120,7 +120,7 @@ const initialState = {
   plantClicked: false,
   jinnSize: 0,
 
-  dialog: null,
+  dialog: { ...dialogs[0], index: 0 },
 
   lenseCoords: {
     x: null,
@@ -301,7 +301,7 @@ const catchPhase = (state, action) => {
         case objects.SEED:
           return allSeedsCaught({
             ...state,
-            inventory: { ...state.inventory, seedsNumber: state.inventory.seedNumber + 1 },
+            inventory: { ...state.inventory, seedsNumber: state.inventory.seedsNumber + 1 },
             seeds: state.seeds.map((seed, _index) =>
               (_index === index) ? { ...seed, clicked: true } : seed
             ),
@@ -335,7 +335,7 @@ const plantPhase = (state, action) => {
         case objects.HATCH:
           return allHatchesClicked({
             ...state,
-            inventory: { ...state.inventory, seedsNumber: state.inventory.seedNumber - 1 },
+            inventory: { ...state.inventory, seedsNumber: state.inventory.seedsNumber - 1 },
             hatches: state.hatches.map((hatch, _index) =>
               (_index === index) ? { ...hatch, clicked: true } : hatch
             ),
@@ -383,7 +383,7 @@ const growthPhase = (state, action) => {
 const jinnGrown = (state) => {
   return {
     ...state,
-    phase: state.jinnSize === 5 ? phases.DIALOG : state.phase,
+    phase: state.jinnSize === 4 ? phases.DIALOG : state.phase,
   };
 };
 

@@ -114,11 +114,15 @@ class App extends Component {
             )
           }
           {
+            inventory.seedsNumber > 0 &&
             <div
+              className = { s['inventory-seed'] }
               style = {{
                 backgroundImage: `url(${require(`./inventory/seed.png`)})`
               }}
-            />
+            >
+              { inventory.seedsNumber } x
+            </div>
           }
         </div>
         <Box />
@@ -130,7 +134,7 @@ class App extends Component {
           />
         }
         {
-          [phases.SMASH, phases.BOX, phases.SOUND].indexOf(phase) === -1 &&
+          [phases.SMASH, phases.BOX, phases.SOUND, phases.LENSE].indexOf(phase) === -1 &&
           <div
             className = { s.center + ' ' + s.separate }
           >
@@ -142,7 +146,7 @@ class App extends Component {
               />
             }
             {
-              (phase === phases.JINN ||
+              ((phase === phases.JINN && jinnSize > 0) ||
               (phase === phases.DIALOG && dialog)) &&
               <div
                 style = {{
